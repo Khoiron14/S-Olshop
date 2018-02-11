@@ -43,10 +43,7 @@ class ItemController extends Controller
             'image' => $request->file('image')->store('items'),
         ]);
 
-        foreach (request('categoryId') as $categoryId) {
-            $category = Category::find($categoryId);
-            $item->categories()->attach($category);
-        }
+        $item->categories()->sync(request('categoryId'));
 
         return redirect()->route('store.show', $request->store)->withSuccess('Item has been added!');
     }
