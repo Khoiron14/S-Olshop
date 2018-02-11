@@ -1,0 +1,26 @@
+
+// Body
+$body-bg: #fff;
+
+// Borders
+$laravel-border-color: darken($body-bg, 10%);
+$list-group-border-color: $laravel-border-color;
+
+$card-border-color: $laravel-border-color;
+
+// Brands
+$primary: #007bff;
+$info: #17a2b8;
+$success: #28a745;
+$warning: #ffc107;
+$danger: #dc3545;
+
+// Typography
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: .875rem; // 14px
+$line-height-base: 1.6;
+$text-color: #636b6f;
+
+// Inputs
+$input-border-color: lighten($text-color, 40%);
+$input-placeholder-color: lighten($text-color, 30%);
