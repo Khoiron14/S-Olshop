@@ -45,19 +45,19 @@ class StoreController extends Controller
             return redirect('/');
         }
 
-        $this->validate(request(), [
-            'name'          => 'required|max:25|unique:stores',
-            'domain'        => 'required|max:15|alpha_dash|unique:stores',
-            'avatar'        => 'required',
-            'description'   => 'required|string|max:500',
+        $this->validate($request, [
+            'name' => 'required|max:25|unique:stores',
+            'domain' => 'required|max:15|alpha_dash|unique:stores',
+            'avatar' => 'required',
+            'description' => 'required|string|max:500',
         ]);
 
         $store = Store::create([
-            'name'          => $request->name,
-            'domain'        => $request->domain,
-            'avatar'        => $request->file('avatar')->store('avatars/stores'),
-            'description'   => $request->description,
-            'user_id'       => $request->user()->id,
+            'name' => $request->name,
+            'domain' => $request->domain,
+            'avatar' => $request->file('avatar')->store('avatars/stores'),
+            'description' => $request->description,
+            'user_id' => $request->user()->id,
         ]);
 
         $request->user()->assignRole('seller');

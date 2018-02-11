@@ -28,7 +28,7 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        $this->validate(request(), [
+        $this->validate($request, [
             'name' => 'required|string|max:40',
             'price' => 'required|integer',
             'stock' => 'required|integer',
@@ -76,7 +76,7 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        $this->validate(request(), [
+        $this->validate($request, [
             'name' => 'required|string|max:40',
             'price' => 'required|integer',
             'stock' => 'required|integer',
