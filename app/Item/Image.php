@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     protected $guarded = [];
+    protected $table = 'image_item';
 
     public function Item()
     {

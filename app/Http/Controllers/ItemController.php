@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Storage;
 use App\Store;
 use App\Item\Item;
+use App\Item\Image;
 use App\Item\Category;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,7 @@ class ItemController extends Controller
             'name' => 'required|string|max:40',
             'price' => 'required|integer',
             'stock' => 'required|integer',
-            'image' => 'required',
+            'images' => 'required',
         ]);
 
         $item = Item::create([
@@ -40,10 +41,16 @@ class ItemController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'stock' => $request->stock,
-            'image' => $request->file('image')->store('items'),
         ]);
 
-        $item->categories()->sync(request('categoryId'));
+        foreach ($request->file('images') as $image) {
+            Image::create([
+                'item_id' => $item->id,
+                'name' => $image->store('items')
+            ]);
+        }
+
+        $item->categories()->sync(request('categoriesId'));
 
         return redirect()->route('store.show', $request->store)->withSuccess('Item has been added!');
     }

@@ -14,13 +14,13 @@ class Item extends Model
 {
     protected $guarded = [];
 
-    public function getImage()
+    public function getAvatar($item)
     {
-        if (!$this->image) {
+        if (!$item->images()->first()) {
             return null;
+        } else {
+            return asset('images/' . $item->images()->first()->name);
         }
-
-        return asset('images/' . $this->image);
     }
 
     public function store()

@@ -51,7 +51,7 @@
                                                     @foreach ($categories as $category)
                                                         <div class="form-check">
                                                             <label class="form-check-label">
-                                                                <input class="form-check-input" name="categoryId[]" type="checkbox" value="{{ $category->id }}">
+                                                                <input class="form-check-input" name="categoriesId[]" type="checkbox" value="{{ $category->id }}">
                                                                 {{ $category->name }}
                                                             </label>
                                                         </div>
@@ -98,7 +98,7 @@
 
                                                 <div class="form-group">
                                                     <label>Image :</label>
-                                                    <input type="file" class="form-control-file" name="image" required>
+                                                    <input type="file" class="form-control-file" name="images[]" multiple required>
                                                 </div>
 
                                                 <div class="modal-footer">
