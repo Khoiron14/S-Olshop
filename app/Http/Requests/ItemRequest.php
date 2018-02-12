@@ -27,6 +27,7 @@ class ItemRequest extends FormRequest
             'name' => 'required|string|max:40',
             'price' => 'required|integer',
             'stock' => 'required|integer',
+            'images.*' => 'required'
         ];
 
         $images = count($this->file('images'));

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Cart;
 use App\Store;
+use App\Image;
 use App\Item\Item;
 use App\Process\Purchase;
 use Illuminate\Notifications\Notifiable;
@@ -40,6 +41,11 @@ class User extends Authenticatable
         }
 
         return asset('images/' . $this->avatar);
+    }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function store()

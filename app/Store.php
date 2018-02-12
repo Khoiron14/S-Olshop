@@ -3,6 +3,7 @@
 namespace App;
 
 use App\User;
+use App\Image;
 use App\Item\Item;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,11 @@ class Store extends Model
         }
 
         return asset('images/' . $this->avatar);
+    }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function user()

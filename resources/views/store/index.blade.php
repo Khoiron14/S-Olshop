@@ -100,7 +100,7 @@
                                                     <label>Image :</label>
                                                     <input
                                                         type="file"
-                                                        class="form-control-file{{ $errors->has('images.*') ? ' is-invalid' : '' }}"
+                                                        class="form-control-file"
                                                         name="images[]"
                                                         multiple
                                                         required

@@ -24,7 +24,7 @@ class ItemController extends Controller
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function store(UploadItem $request, Store $store)
+    public function store(ItemRequest $request, Store $store)
     {
         if (!$request->user()->hasPermissionTo('post item')) {
             return redirect()->back();
@@ -77,13 +77,10 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        if ($request->file('image')) {
-            if ($item->image) {
-                Storage::delete($item->image);
-            }
-
-            $item->update([
-                'image' => $request->file('image')->store('items'),
+        foreach ($request->file('images') as $image) {
+            Image::create([
+                'item_id' => $item->id,
+                'name' => $image->store('items')
             ]);
         }
 
