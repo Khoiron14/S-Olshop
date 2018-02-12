@@ -27,12 +27,6 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('item_id');
             $table->primary(['category_id', 'item_id']);
         });
-
-        Schema::create('image_item', function (Blueprint $table) {
-            $table->unsignedInteger('item_id');
-            $table->string('name');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -44,6 +38,5 @@ class CreateItemsTable extends Migration
     {
         Schema::dropIfExists('items');
         Schema::dropIfExists('category_item');
-        Schema::dropIfExists('image_item');
     }
 }
