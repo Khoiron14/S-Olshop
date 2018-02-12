@@ -98,7 +98,20 @@
 
                                                 <div class="form-group">
                                                     <label>Image :</label>
-                                                    <input type="file" class="form-control-file" name="images[]" multiple required>
+                                                    <input
+                                                        type="file"
+                                                        class="form-control-file{{ $errors->has('images.*') ? ' is-invalid' : '' }}"
+                                                        name="images[]"
+                                                        multiple
+                                                        required
+                                                    >
+                                                    @if (count($errors) > 0)
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">

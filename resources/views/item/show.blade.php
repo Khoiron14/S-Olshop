@@ -110,9 +110,14 @@
                                                 <div class="form-group">
                                                     <label>Image :</label><br>
                                                     @foreach ($item->images()->get() as $image)
-                                                        <img class="rounded" src="{{ asset('images/' . $image->name) }}" alt="avatar" height="64" style="object-fit: cover; background-color: #ddd">
+                                                        <img class="rounded" src="{{ asset('images/' . $image->name) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
                                                     <input type="file" class="form-control-file" name="image">
+                                                    @if ($errors->has('images'))
+                                                        <div class="invalid-feedback">
+                                                            <strong>{{ $errors->first('images') }}</strong>
+                                                        </div>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">

@@ -8,6 +8,7 @@ use App\Store;
 use App\Item\Item;
 use App\Item\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\UploadStore;
 use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
@@ -39,18 +40,11 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UploadStore $request)
     {
         if (!($request->user()->hasRole('user'))) {
             return redirect('/');
         }
-
-        $this->validate($request, [
-            'name' => 'required|max:25|unique:stores',
-            'domain' => 'required|max:15|alpha_dash|unique:stores',
-            'avatar' => 'required',
-            'description' => 'required|string|max:500',
-        ]);
 
         $store = Store::create([
             'name' => $request->name,

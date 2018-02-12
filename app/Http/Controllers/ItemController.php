@@ -8,6 +8,7 @@ use App\Item\Item;
 use App\Item\Image;
 use App\Item\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\UploadItem;
 
 class ItemController extends Controller
 {
@@ -23,18 +24,11 @@ class ItemController extends Controller
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Store $store)
+    public function store(UploadItem $request, Store $store)
     {
         if (!$request->user()->hasPermissionTo('post item')) {
             return redirect()->back();
         }
-
-        $this->validate($request, [
-            'name' => 'required|string|max:40',
-            'price' => 'required|integer',
-            'stock' => 'required|integer',
-            'images' => 'required',
-        ]);
 
         $item = Item::create([
             'store_id' => $store->id,
