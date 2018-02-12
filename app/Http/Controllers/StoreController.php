@@ -8,7 +8,8 @@ use App\Store;
 use App\Item\Item;
 use App\Item\Category;
 use Illuminate\Http\Request;
-use App\Http\Requests\UploadStore;
+use App\Http\Requests\Store\UploadStore;
+use App\Http\Requests\Store\UpdateStore;
 use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
@@ -80,18 +81,8 @@ class StoreController extends Controller
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Store $store)
+    public function update(UpdateStore $request, Store $store)
     {
-        if (!$store->name == $request->name) {
-            $this->validate(request(), [
-                'name' => 'required|max:25|unique:stores',
-            ]);
-        }
-
-        $this->validate(request(), [
-            'description' => 'required|string|max:500',
-        ]);
-
         if ($request->file('avatar')) {
             if ($store->avatar) {
                 Storage::delete($store->avatar);

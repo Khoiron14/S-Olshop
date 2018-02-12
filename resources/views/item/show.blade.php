@@ -112,7 +112,7 @@
                                                     @foreach ($item->images()->get() as $image)
                                                         <img class="rounded" src="{{ asset('images/' . $image->name) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
-                                                    <input type="file" class="form-control-file" name="image">
+                                                    <input type="file" class="form-control-file" name="images[]" multiple>
                                                     @if ($errors->has('images'))
                                                         <div class="invalid-feedback">
                                                             <strong>{{ $errors->first('images') }}</strong>

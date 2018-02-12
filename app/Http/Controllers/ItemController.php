@@ -8,7 +8,7 @@ use App\Item\Item;
 use App\Item\Image;
 use App\Item\Category;
 use Illuminate\Http\Request;
-use App\Http\Requests\UploadItem;
+use App\Http\Requests\ItemRequest;
 
 class ItemController extends Controller
 {
@@ -71,17 +71,11 @@ class ItemController extends Controller
      * @param  \App\Item\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Store $store, Item $item)
+    public function update(ItemRequest $request, Store $store, Item $item)
     {
         if (!$request->user()->can('edit item')) {
             return redirect()->back();
         }
-
-        $this->validate($request, [
-            'name' => 'required|string|max:40',
-            'price' => 'required|integer',
-            'stock' => 'required|integer',
-        ]);
 
         if ($request->file('image')) {
             if ($item->image) {
