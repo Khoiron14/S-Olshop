@@ -34,13 +34,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getAvatar()
+    public function getImage()
     {
-        if (!$this->avatar) {
+        if (!$this->image()) {
             return null;
         }
 
-        return asset('images/' . $this->avatar);
+        return asset('images/' . $this->image()->path);
     }
 
     public function image()
