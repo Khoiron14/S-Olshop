@@ -30,9 +30,11 @@ class ItemRequest extends FormRequest
             'images.*' => 'required'
         ];
 
-        $images = count($this->file('images'));
-        foreach(range(0, $images) as $index) {
-            $rules['images.' . $index] = 'image|mimes:jpeg,bmp,png';
+        if ($this->file('images')) {
+            $images = count($this->file('images'));
+            foreach(range(0, $images) as $index) {
+                $rules['images.' . $index] = 'image|mimes:jpeg,bmp,png';
+            }
         }
 
         return $rules;

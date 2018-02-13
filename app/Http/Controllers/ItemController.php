@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Storage;
 use App\Store;
 use App\Item\Item;
-use App\Item\Image;
 use App\Item\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
@@ -38,10 +37,7 @@ class ItemController extends Controller
         ]);
 
         foreach ($request->file('images') as $image) {
-            Image::create([
-                'item_id' => $item->id,
-                'name' => $image->store('items')
-            ]);
+            $item->images()->create(['path' => $image->store('items')]);
         }
 
         $item->categories()->sync(request('categoriesId'));
@@ -77,11 +73,12 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        foreach ($request->file('images') as $image) {
-            Image::create([
-                'item_id' => $item->id,
-                'name' => $image->store('items')
-            ]);
+        if ($request->file('images')) {
+            $item->images()->delete();
+
+            foreach ($request->file('images') as $image) {
+                $item->images()->create(['path' => $image->store('items')]);
+            }
         }
 
         $item->update([

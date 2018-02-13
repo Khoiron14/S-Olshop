@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header bg-primary text-white mb-3">
                     {{-- image & name --}}
-                    <img class="rounded" src="{{ asset( $item->getAvatar($item)) }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img class="rounded" src="{{ asset( $item->getImage()) }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ $item->name }}</h4>
 
                     {{-- option button --}}
@@ -110,9 +110,7 @@
                                                 <div class="form-group">
                                                     <label>Image :</label><br>
                                                     @foreach ($item->images()->get() as $image)
-                                                        <img class="rounded" src="{{ asset('images/' . $image->name) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
-                                                        
-                                                        <br><br>
+                                                        <img class="rounded" src="{{ asset('images/' . $image->path) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
                                                     <input type="file" class="form-control-file" name="images[]" multiple>
                                                     @if (count($errors) > 0)
@@ -182,7 +180,7 @@
                                 <th scope="row">Images :</th>
                                 <td>
                                     @foreach ($item->images()->get() as $image)
-                                        <img src="{{ asset('images/' . $image->name) }}" alt="avatar" height="100" style="object-fit: cover; background-color: #ddd">
+                                        <img src="{{ asset('images/' . $image->path) }}" alt="image" height="100" style="object-fit: cover; background-color: #ddd">
                                     @endforeach
                                 </td>
                             </tr>
