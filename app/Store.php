@@ -16,13 +16,13 @@ class Store extends Model
         return 'domain';
     }
 
-    public function getAvatar()
+    public function getImage()
     {
-        if (!$this->avatar) {
+        if (!$this->image()) {
             return null;
         }
 
-        return asset('images/' . $this->avatar);
+        return asset('images/' . $this->image()->path);
     }
 
     public function image()
