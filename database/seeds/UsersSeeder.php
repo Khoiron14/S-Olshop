@@ -17,6 +17,7 @@ class UsersSeeder extends Seeder
             'email' => 'admin@example.com',
         ]);
         $user->assignRole('admin');
+        $user->image()->create(['path' => 'seeds/user.png']);
 
         $user = factory(User::class)->create([
             'name' => 'sellerUser',

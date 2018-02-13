@@ -25,5 +25,6 @@ class ItemsAndCategoriesSeeder extends Seeder
         ]);
 
         $item->categories()->attach([$category1, $category5]);
+        $item->images()->create(['path' => 'seeds/item.png']);
     }
 }
