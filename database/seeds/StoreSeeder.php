@@ -12,11 +12,13 @@ class StoreSeeder extends Seeder
      */
     public function run()
     {
-        Store::create([
+        $store = Store::create([
             'user_id' => 2,
             'name' => 'Maju jaya Abadi',
             'domain' => 'MJAstore',
-            'description' => 'Bertarunglah dragon ball, dengan segala kemampuan yang ada. Bila kembali dari langit, semoga hidup kan jadi lebih baik',
+            'description' => 'lorem ipsum....',
         ]);
+
+        $store->image()->create(['path' => 'seeds/store.png']);
     }
 }
