@@ -74,6 +74,10 @@ class ItemController extends Controller
         }
 
         if ($request->file('images')) {
+            foreach ($item->images()->get() as $image) {
+                Storage::delete($image->path);
+            }
+
             $item->images()->delete();
 
             foreach ($request->file('images') as $image) {
@@ -105,6 +109,11 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
+        foreach ($item->images()->get() as $image) {
+            Storage::delete($image->path);
+        }
+
+        $item->images()->delete();
         $item->delete();
 
         return redirect()->route('store.show', $store)->withDanger('Item has been deleted!');

@@ -114,6 +114,8 @@ class StoreController extends Controller
         }
 
         $store->user->removeRole('seller');
+        Storage::delete($store->image()->first()->path);
+        $store->image()->delete();
         $store->delete();
 
         return redirect()->route('admin.index')->withDanger('Store has been deleted!');
