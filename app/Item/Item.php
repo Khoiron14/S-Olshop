@@ -14,6 +14,16 @@ class Item extends Model
 {
     protected $guarded = [];
 
+    public function getImage()
+    {
+        if (!$this->images()->first())
+        {
+            return null;
+        }
+
+        return asset('images/' . $this->images()->first()->path);
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);

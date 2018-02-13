@@ -98,8 +98,8 @@
 
                                                 <div class="form-group">
                                                     <label>Avatar :</label><br>
-                                                    <img class="rounded" src="{{ auth()->user()->getAvatar() }}" alt="avatar" height="64" style="object-fit: cover; background-color: #ddd">
-                                                    <input type="file" class="form-control-file d-inline" name="avatar">
+                                                    <img class="rounded" src="{{ auth()->user()->getImage() }}" alt="avatar" height="64" style="object-fit: cover; background-color: #ddd">
+                                                    <input type="file" class="form-control-file d-inline" name="image">
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="card-body">
-                    <img class="rounded" src="{{ auth()->user()->getAvatar() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img class="rounded" src="{{ auth()->user()->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ Auth::user()->name }}</h4>
 
                     <hr>
@@ -144,7 +144,7 @@
                                         {{-- edit store --}}
                                         <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editStore">Edit</button>
 
-                                        {{-- modal form for edit --}}
+                                        {{-- modal form for edit store --}}
                                         <div class="modal fade" id="editStore" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
@@ -178,8 +178,8 @@
 
                                                             <div class="form-group">
                                                                 <label>Avatar :</label><br>
-                                                                <img class="rounded" src="{{ auth()->user()->store->getAvatar() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
-                                                                <input type="file" class="form-control-file d-inline" name="avatar">
+                                                                <img class="rounded" src="{{ auth()->user()->store->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                                                                <input type="file" class="form-control-file d-inline" name="image">
                                                             </div>
 
                                                             <div class="form-group">

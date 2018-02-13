@@ -40,7 +40,7 @@ class User extends Authenticatable
             return null;
         }
 
-        return asset('images/' . $this->image()->path);
+        return asset('images/' . $this->image()->first()->path);
     }
 
     public function image()

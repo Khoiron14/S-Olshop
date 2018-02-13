@@ -8,7 +8,7 @@
                 @foreach ($items as $item)
                     <div class="col-md-4 col-sm-6" style="margin-bottom: 35px">
                         <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.15)">
-                            <img class="card-img-top rounded" src="{{ $item->getAvatar($item) }}" alt="Card image cap" height="200px" style="object-fit: cover">
+                            <img class="card-img-top rounded" src="{{ $item->getImage() }}" alt="Card image cap" height="200px" style="object-fit: cover">
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{{ route('item.show', [$item->store, $item]) }}">{{ $item->name }}</a>

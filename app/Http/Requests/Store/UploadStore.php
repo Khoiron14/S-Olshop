@@ -26,7 +26,7 @@ class UploadStore extends FormRequest
         return [
             'name' => 'required|max:25|unique:stores',
             'domain' => 'required|max:15|alpha_dash|unique:stores',
-            'avatar' => 'required',
+            'image' => 'required',
             'description' => 'required|string|max:500',
         ];
     }

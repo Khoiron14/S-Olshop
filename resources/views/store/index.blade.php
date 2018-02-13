@@ -8,7 +8,7 @@
                 <div class="card-header bg-primary text-white mb-3">
 
                     {{-- image & name --}}
-                    <img class="rounded" src="{{ $store->getAvatar() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img class="rounded" src="{{ $store->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ $store->name }}</h4>
 
                     {{-- option button --}}

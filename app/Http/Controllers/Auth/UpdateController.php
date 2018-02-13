@@ -15,14 +15,13 @@ class UpdateController extends Controller
 
     public function update(Request $request)
     {
-        if ($request->file('avatar')) {
-            if ($request->user()->avatar) {
-                Storage::delete($request->user()->avatar);
+        if ($request->file('image')) {
+            if ($request->user()->image()) {
+                Storage::delete($request->user()->image()->first()->path);
             }
 
-            $request->user()->update([
-                'avatar' => $request->file('avatar')->store('avatars/users'),
-            ]);
+            $image = $request->file('image')->store('avatars/users');
+            $request->user()->image()->update(['path' => $image]);
         }
 
         auth()->user()->update([

@@ -50,11 +50,12 @@ class StoreController extends Controller
         $store = Store::create([
             'name' => $request->name,
             'domain' => $request->domain,
-            'avatar' => $request->file('avatar')->store('avatars/stores'),
             'description' => $request->description,
             'user_id' => $request->user()->id,
         ]);
 
+        $image = $request->file('image')->store('avatars/stores');
+        $store->image()->create(['path' => $image]);
         $request->user()->assignRole('seller');
 
         return redirect()->route('store.show', $store)->withSuccess('You successfully registered store!');
@@ -83,14 +84,13 @@ class StoreController extends Controller
      */
     public function update(UpdateStore $request, Store $store)
     {
-        if ($request->file('avatar')) {
-            if ($store->avatar) {
-                Storage::delete($store->avatar);
+        if ($request->file('image')) {
+            if ($store->image()) {
+                Storage::delete($store->image()->first()->path);
             }
 
-            $store->update([
-                'avatar' => $request->file('avatar')->store('avatars/stores'),
-            ]);
+            $image = $request->file('image')->store('avatars/stores');
+            $store->image()->update(['path' => $image]);
         }
 
         $store->update([
