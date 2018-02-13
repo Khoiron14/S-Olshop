@@ -14,15 +14,6 @@ class Item extends Model
 {
     protected $guarded = [];
 
-    public function getAvatar($item)
-    {
-        if (!$item->images()->first()) {
-            return null;
-        } else {
-            return asset('images/' . $item->images()->first()->name);
-        }
-    }
-
     public function store()
     {
         return $this->belongsTo(Store::class);
