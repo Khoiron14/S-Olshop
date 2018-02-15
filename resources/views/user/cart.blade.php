@@ -39,7 +39,7 @@
                                         <form action="{{ route('cart.destroy', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
                                             @if ($cart->quantity == 1)
-                                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-light" name="cart">-</button>
+                                                <button type="submit" id="delete" class="btn btn-light" name="cart">-</button>
                                             @else
                                                 <button type="submit" class="btn btn-light" name="cart">-</button>
                                             @endif

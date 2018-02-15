@@ -58,7 +58,9 @@ class StoreController extends Controller
         $store->image()->create(['path' => $image]);
         $request->user()->assignRole('seller');
 
-        return redirect()->route('store.show', $store)->withSuccess('You successfully registered store!');
+        alert()->success('You successfully registered store!');
+
+        return redirect()->route('store.show', $store);
     }
 
     /**
@@ -98,7 +100,9 @@ class StoreController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('store.show', $store)->withInfo('Store has been updated!');
+        alert()->success('Store has been updated!');
+
+        return redirect()->route('store.show', $store);
     }
 
     /**
@@ -118,6 +122,8 @@ class StoreController extends Controller
         $store->image()->delete();
         $store->delete();
 
-        return redirect()->route('admin.index')->withDanger('Store has been deleted!');
+        alert()->success('Store has been deleted!');
+
+        return redirect()->route('admin.index');
     }
 }

@@ -42,7 +42,9 @@ class ItemController extends Controller
 
         $item->categories()->sync(request('categoriesId'));
 
-        return redirect()->route('store.show', $request->store)->withSuccess('Item has been added!');
+        alert()->success('Item has been added!');
+
+        return redirect()->route('store.show', $request->store);
     }
 
     /**
@@ -93,7 +95,9 @@ class ItemController extends Controller
 
         $item->categories()->sync(request('categoryId'));
 
-        return redirect()->route('item.show', [$store, $item])->withInfo('Item has been updated!');
+        alert()->success('item has been updated!');
+
+        return redirect()->route('item.show', [$store, $item]);
     }
 
     /**
@@ -116,6 +120,8 @@ class ItemController extends Controller
         $item->images()->delete();
         $item->delete();
 
-        return redirect()->route('store.show', $store)->withDanger('Item has been deleted!');
+        alert()->success('item has been deleted!');
+
+        return redirect()->route('store.show', $store);
     }
 }

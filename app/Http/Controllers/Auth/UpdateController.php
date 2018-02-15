@@ -31,6 +31,8 @@ class UpdateController extends Controller
             'address'   => $request->address,
         ]);
 
-        return redirect()->route('user.profile')->withInfo('Profile has been updated!');
+        alert()->success('Profile has been updated!');
+
+        return redirect()->route('user.profile');
     }
 }
