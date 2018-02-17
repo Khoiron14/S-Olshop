@@ -6,7 +6,6 @@ use Storage;
 use App\Store;
 use App\Item\Item;
 use App\Item\Category;
-use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
 
 class ItemController extends Controller
@@ -19,7 +18,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
@@ -64,7 +63,7 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
      * @param  \App\Item\Item  $item
      * @return \Illuminate\Http\Response
