@@ -8,8 +8,7 @@ use App\Store;
 use App\Item\Item;
 use App\Item\Category;
 use Illuminate\Http\Request;
-use App\Http\Requests\Store\UploadStore;
-use App\Http\Requests\Store\UpdateStore;
+use App\Http\Requests\StoreRequest;
 use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
@@ -41,7 +40,7 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UploadStore $request)
+    public function store(StoreRequest $request)
     {
         if (!($request->user()->hasRole('user'))) {
             return redirect('/');
@@ -84,7 +83,7 @@ class StoreController extends Controller
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStore $request, Store $store)
+    public function update(StoreRequest $request, Store $store)
     {
         if ($request->file('image')) {
             if ($store->image()) {

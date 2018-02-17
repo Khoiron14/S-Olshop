@@ -27,9 +27,14 @@ class ItemRequest extends FormRequest
             'name' => 'required|string|max:40',
             'price' => 'required|integer',
             'stock' => 'required|integer',
-            'images.*' => 'required'
         ];
 
+        // if adding item, image is required
+        if (!$this->item->images()) {
+            $rules['images'] = 'required';
+        }
+
+        // if user want to upload images
         if ($this->file('images')) {
             $images = count($this->file('images'));
             foreach(range(0, $images) as $index) {
