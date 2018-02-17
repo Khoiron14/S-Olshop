@@ -30,7 +30,7 @@ class ItemRequest extends FormRequest
         ];
 
         // if adding item, image is required
-        if (!$this->item->images()) {
+        if (!$this->item) {
             $rules['images'] = 'required';
         }
 

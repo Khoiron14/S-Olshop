@@ -7,9 +7,7 @@ use App\User;
 use App\Store;
 use App\Item\Item;
 use App\Item\Category;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreRequest;
-use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
@@ -23,12 +21,12 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        if (!($request->user()->hasRole('user'))) {
+        if (!(auth()->user()->hasRole('user'))) {
             return redirect('/');
-        } elseif ($request->user()->hasrole('seller')) {
-            return redirect()->route('store.show', $request->user()->store);
+        } elseif (auth()->user()->hasrole('seller')) {
+            return redirect()->route('store.show', auth()->user()->store);
         }
 
         return view('store.register');
@@ -37,7 +35,7 @@ class StoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
@@ -79,7 +77,7 @@ class StoreController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreRequest  $request
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
