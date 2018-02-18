@@ -98,7 +98,7 @@ class StoreController extends Controller
      */
     public function destroy(Store $store)
     {
-        if (!request()->user()->hasPermissionTo('delete seller')) {
+        if (!auth()->user()->hasPermissionTo('delete seller')) {
             return redirect()->back();
         }
 
