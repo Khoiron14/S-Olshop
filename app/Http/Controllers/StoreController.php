@@ -77,19 +77,13 @@ class StoreController extends Controller
      */
     public function update(StoreRequest $request, Store $store)
     {
-        if ($request->file('image')) {
-            if ($store->image()) {
-                Storage::delete($store->image()->first()->path);
-            }
+        $store->update($request->all());
 
+        if ($request->file('image')) {
+            Storage::delete($store->image()->first()->path);
             $image = $request->file('image')->store('avatars/stores');
             $store->image()->update(['path' => $image]);
         }
-
-        $store->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
 
         alert()->success('Store has been updated!');
 
