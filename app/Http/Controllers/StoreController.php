@@ -40,20 +40,14 @@ class StoreController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if (!($request->user()->hasRole('user'))) {
+        if (!(auth()->user()->hasRole('user'))) {
             return redirect('/');
         }
 
-        $store = Store::create([
-            'name' => $request->name,
-            'domain' => $request->domain,
-            'description' => $request->description,
-            'user_id' => $request->user()->id,
-        ]);
-
+        $store = auth()->user()->store()->create($request->all());
         $image = $request->file('image')->store('avatars/stores');
         $store->image()->create(['path' => $image]);
-        $request->user()->assignRole('seller');
+        auth()->user()->assignRole('seller');
 
         alert()->success('You successfully registered store!');
 

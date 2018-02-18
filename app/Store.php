@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'domain', 'description'];
 
     public function getRouteKeyName()
     {
