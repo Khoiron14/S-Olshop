@@ -24,16 +24,11 @@ class ItemController extends Controller
      */
     public function store(ItemRequest $request, Store $store)
     {
-        if (!$request->user()->hasPermissionTo('post item')) {
+        if (!auth()->user()->hasPermissionTo('post item')) {
             return redirect()->back();
         }
 
-        $item = Item::create([
-            'store_id' => $store->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
+        $item = $store->items()->create($request->all());
 
         foreach ($request->file('images') as $image) {
             $item->images()->create(['path' => $image->store('items')]);
@@ -70,7 +65,7 @@ class ItemController extends Controller
      */
     public function update(ItemRequest $request, Store $store, Item $item)
     {
-        if (!$request->user()->can('edit item')) {
+        if (!auth()->user()->can('edit item')) {
             return redirect()->back();
         }
 
@@ -86,12 +81,7 @@ class ItemController extends Controller
             }
         }
 
-        $item->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
-
+        $item->update($request->all());
         $item->categories()->sync(request('categoryId'));
 
         alert()->success('item has been updated!');
@@ -108,7 +98,7 @@ class ItemController extends Controller
      */
     public function destroy(Store $store, Item $item)
     {
-        if (!request()->user()->can('delete item')) {
+        if (!auth()->user()->can('delete item')) {
             return redirect()->back();
         }
 
