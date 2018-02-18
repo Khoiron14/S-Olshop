@@ -82,7 +82,7 @@ class ItemController extends Controller
         }
 
         $item->update($request->all());
-        $item->categories()->sync(request('categoryId'));
+        $item->categories()->sync(request('categoriesId'));
 
         alert()->success('item has been updated!');
 

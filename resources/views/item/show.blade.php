@@ -54,7 +54,7 @@
                                                             <label class="form-check-label">
                                                                 <input
                                                                     class="form-check-input"
-                                                                    name="categoryId[]"
+                                                                    name="categoriesId[]"
                                                                     type="checkbox"
                                                                     value="{{ $category->id }}"
                                                                     @foreach ($item->categories as $itemCategory)
