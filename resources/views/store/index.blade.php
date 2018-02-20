@@ -8,7 +8,7 @@
                 <div class="card-header bg-primary text-white mb-3">
 
                     {{-- image & name --}}
-                    <img class="rounded" src="{{ $store->getAvatar() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img class="rounded" src="{{ $store->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ $store->name }}</h4>
 
                     {{-- option button --}}
@@ -51,7 +51,7 @@
                                                     @foreach ($categories as $category)
                                                         <div class="form-check">
                                                             <label class="form-check-label">
-                                                                <input class="form-check-input" name="categoryId[]" type="checkbox" value="{{ $category->id }}">
+                                                                <input class="form-check-input" name="categoriesId[]" type="checkbox" value="{{ $category->id }}">
                                                                 {{ $category->name }}
                                                             </label>
                                                         </div>
@@ -98,7 +98,20 @@
 
                                                 <div class="form-group">
                                                     <label>Image :</label>
-                                                    <input type="file" class="form-control-file" name="image" required>
+                                                    <input
+                                                        type="file"
+                                                        class="form-control-file"
+                                                        name="images[]"
+                                                        multiple
+                                                        required
+                                                    >
+                                                    @if (count($errors) > 0)
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">

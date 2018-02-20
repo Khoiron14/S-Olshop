@@ -94,7 +94,7 @@
                             <label class="col-lg-4 col-form-label text-lg-right">Avatar</label>
 
                             <div class="col-lg-6">
-                                <input type="file" class="form-control-file" name="avatar" required>
+                                <input type="file" class="form-control-file" name="image" required>
                             </div>
                         </div>
 

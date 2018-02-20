@@ -3,25 +3,31 @@
 namespace App;
 
 use App\User;
+use App\Image;
 use App\Item\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'domain', 'description'];
 
     public function getRouteKeyName()
     {
         return 'domain';
     }
 
-    public function getAvatar()
+    public function getImage()
     {
-        if (!$this->avatar) {
+        if (!$this->image()) {
             return null;
         }
 
-        return asset('images/' . $this->avatar);
+        return asset('images/' . $this->image()->first()->path);
+    }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function user()

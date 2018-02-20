@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Item;
+namespace App;
 
-use App\Item\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
     protected $guarded = [];
 
-    public function Item()
+    public function imageable()
     {
-        return $this->belongsToMany();
+        return $this->morphTo();
     }
 }

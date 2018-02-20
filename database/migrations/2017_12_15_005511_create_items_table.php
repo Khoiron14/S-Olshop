@@ -19,7 +19,6 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('price');
             $table->unsignedInteger('stock');
-            $table->string('image')->nullable()->default('seeds/noImage.png');
             $table->timestamps();
         });
 

@@ -18,9 +18,10 @@ class CreateStoresTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('domain');
-            $table->string('avatar')->nullable()->default('seeds/noImage.png');
             $table->text('description');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

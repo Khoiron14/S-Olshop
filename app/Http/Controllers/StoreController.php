@@ -7,8 +7,7 @@ use App\User;
 use App\Store;
 use App\Item\Item;
 use App\Item\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreRequest;
 
 class StoreController extends Controller
 {
@@ -22,12 +21,12 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        if (!($request->user()->hasRole('user'))) {
+        if (!(auth()->user()->hasRole('user'))) {
             return redirect('/');
-        } elseif ($request->user()->hasrole('seller')) {
-            return redirect()->route('store.show', $request->user()->store);
+        } elseif (auth()->user()->hasrole('seller')) {
+            return redirect()->route('store.show', auth()->user()->store);
         }
 
         return view('store.register');
@@ -36,33 +35,23 @@ class StoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        if (!($request->user()->hasRole('user'))) {
+        if (!(auth()->user()->hasRole('user'))) {
             return redirect('/');
         }
 
-        $this->validate(request(), [
-            'name'          => 'required|max:25|unique:stores',
-            'domain'        => 'required|max:15|alpha_dash|unique:stores',
-            'avatar'        => 'required',
-            'description'   => 'required|string|max:500',
-        ]);
+        $store = auth()->user()->store()->create($request->all());
+        $image = $request->file('image')->store('avatars/stores');
+        $store->image()->create(['path' => $image]);
+        auth()->user()->assignRole('seller');
 
-        $store = Store::create([
-            'name'          => $request->name,
-            'domain'        => $request->domain,
-            'avatar'        => $request->file('avatar')->store('avatars/stores'),
-            'description'   => $request->description,
-            'user_id'       => $request->user()->id,
-        ]);
+        alert()->success('You successfully registered store!');
 
-        $request->user()->assignRole('seller');
-
-        return redirect()->route('store.show', $store)->withSuccess('You successfully registered store!');
+        return redirect()->route('store.show', $store);
     }
 
     /**
@@ -82,38 +71,23 @@ class StoreController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreRequest  $request
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Store $store)
+    public function update(StoreRequest $request, Store $store)
     {
-        if (!$store->name == $request->name) {
-            $this->validate(request(), [
-                'name' => 'required|max:25|unique:stores',
-            ]);
+        $store->update($request->all());
+
+        if ($request->file('image')) {
+            Storage::delete($store->image()->first()->path);
+            $image = $request->file('image')->store('avatars/stores');
+            $store->image()->update(['path' => $image]);
         }
 
-        $this->validate(request(), [
-            'description' => 'required|string|max:500',
-        ]);
+        alert()->success('Store has been updated!');
 
-        if ($request->file('avatar')) {
-            if ($store->avatar) {
-                Storage::delete($store->avatar);
-            }
-
-            $store->update([
-                'avatar' => $request->file('avatar')->store('avatars/stores'),
-            ]);
-        }
-
-        $store->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('store.show', $store)->withInfo('Store has been updated!');
+        return redirect()->route('store.show', $store);
     }
 
     /**
@@ -124,13 +98,17 @@ class StoreController extends Controller
      */
     public function destroy(Store $store)
     {
-        if (!request()->user()->hasPermissionTo('delete seller')) {
+        if (!auth()->user()->hasPermissionTo('delete seller')) {
             return redirect()->back();
         }
 
         $store->user->removeRole('seller');
+        Storage::delete($store->image()->first()->path);
+        $store->image()->delete();
         $store->delete();
 
-        return redirect()->route('admin.index')->withDanger('Store has been deleted!');
+        alert()->success('Store has been deleted!');
+
+        return redirect()->route('admin.index');
     }
 }

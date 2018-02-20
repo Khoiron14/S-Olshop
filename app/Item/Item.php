@@ -5,22 +5,23 @@ namespace App\Item;
 use App\User;
 use App\Cart;
 use App\Store;
-use App\Item\Image;
+use App\Image;
 use App\Item\Category;
 use App\Process\Purchase;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'price', 'stock'];
 
     public function getImage()
     {
-        if (!$this->image) {
+        if (!$this->images()->first())
+        {
             return null;
         }
 
-        return asset('images/' . $this->image);
+        return asset('images/' . $this->images()->first()->path);
     }
 
     public function store()
@@ -35,7 +36,7 @@ class Item extends Model
 
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function purchases()

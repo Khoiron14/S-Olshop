@@ -6,7 +6,7 @@ use Storage;
 use App\Store;
 use App\Item\Item;
 use App\Item\Category;
-use Illuminate\Http\Request;
+use App\Http\Requests\ItemRequest;
 
 class ItemController extends Controller
 {
@@ -18,37 +18,27 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Store $store)
+    public function store(ItemRequest $request, Store $store)
     {
-        if (!$request->user()->hasPermissionTo('post item')) {
+        if (!auth()->user()->hasPermissionTo('post item')) {
             return redirect()->back();
         }
 
-        $this->validate(request(), [
-            'name' => 'required|string|max:40',
-            'price' => 'required|integer',
-            'stock' => 'required|integer',
-            'image' => 'required',
-        ]);
+        $item = $store->items()->create($request->all());
 
-        $item = Item::create([
-            'store_id' => $store->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => $request->file('image')->store('items'),
-        ]);
-
-        foreach (request('categoryId') as $categoryId) {
-            $category = Category::find($categoryId);
-            $item->categories()->attach($category);
+        foreach ($request->file('images') as $image) {
+            $item->images()->create(['path' => $image->store('items')]);
         }
 
-        return redirect()->route('store.show', $request->store)->withSuccess('Item has been added!');
+        $item->categories()->sync(request('categoriesId'));
+
+        alert()->success('Item has been added!');
+
+        return redirect()->route('store.show', $request->store);
     }
 
     /**
@@ -68,42 +58,35 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
      * @param  \App\Item\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Store $store, Item $item)
+    public function update(ItemRequest $request, Store $store, Item $item)
     {
-        if (!$request->user()->can('edit item')) {
+        if (!auth()->user()->can('edit item')) {
             return redirect()->back();
         }
 
-        $this->validate(request(), [
-            'name' => 'required|string|max:40',
-            'price' => 'required|integer',
-            'stock' => 'required|integer',
-        ]);
-
-        if ($request->file('image')) {
-            if ($item->image) {
-                Storage::delete($item->image);
+        if ($request->file('images')) {
+            foreach ($item->images()->get() as $image) {
+                Storage::delete($image->path);
             }
 
-            $item->update([
-                'image' => $request->file('image')->store('items'),
-            ]);
+            $item->images()->delete();
+
+            foreach ($request->file('images') as $image) {
+                $item->images()->create(['path' => $image->store('items')]);
+            }
         }
 
-        $item->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
+        $item->update($request->all());
+        $item->categories()->sync(request('categoriesId'));
 
-        $item->categories()->sync(request('categoryId'));
+        alert()->success('item has been updated!');
 
-        return redirect()->route('item.show', [$store, $item])->withInfo('Item has been updated!');
+        return redirect()->route('item.show', [$store, $item]);
     }
 
     /**
@@ -115,12 +98,19 @@ class ItemController extends Controller
      */
     public function destroy(Store $store, Item $item)
     {
-        if (!request()->user()->can('delete item')) {
+        if (!auth()->user()->can('delete item')) {
             return redirect()->back();
         }
 
+        foreach ($item->images()->get() as $image) {
+            Storage::delete($image->path);
+        }
+
+        $item->images()->delete();
         $item->delete();
 
-        return redirect()->route('store.show', $store)->withDanger('Item has been deleted!');
+        alert()->success('item has been deleted!');
+
+        return redirect()->route('store.show', $store);
     }
 }

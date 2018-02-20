@@ -9,6 +9,5 @@ $factory->define(Item::class, function (Faker $faker) {
         'name' => $faker->sentence,
         'price' => $faker->randomNumber(6),
         'stock' => $faker->numberBetween(10, 20),
-        'image' => 'seeds/item.png'
     ];
 });

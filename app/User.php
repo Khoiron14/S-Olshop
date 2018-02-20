@@ -4,6 +4,7 @@ namespace App;
 
 use App\Cart;
 use App\Store;
+use App\Image;
 use App\Item\Item;
 use App\Process\Purchase;
 use Illuminate\Notifications\Notifiable;
@@ -33,13 +34,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getAvatar()
+    public function getImage()
     {
-        if (!$this->avatar) {
+        if (!$this->image()) {
             return null;
         }
 
-        return asset('images/' . $this->avatar);
+        return asset('images/' . $this->image()->first()->path);
+    }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function store()

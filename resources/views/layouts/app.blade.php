@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -68,11 +71,12 @@
         </div>
     </nav>
 
-    @include('layouts.partials._alerts')
     @yield('content')
 </div>
 
 <!-- Scripts -->
+@include('sweet::alert')
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/others/delete.js') }}"></script>
 </body>
 </html>
