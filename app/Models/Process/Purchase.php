@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Process;
+namespace App\Models\Process;
 
-use App\User;
-use App\Item\Item;
-use App\Process\Status;
+use App\Models\Users\User;
+use App\Models\Items\Item;
+use App\Models\Process\Status;
 use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model

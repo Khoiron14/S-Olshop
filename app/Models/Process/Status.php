@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Process;
+namespace App\Models\Process;
 
-use App\Process\Purchase;
+use App\Models\Process\Purchase;
 use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model

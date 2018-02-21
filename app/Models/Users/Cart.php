@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models\Users;
 
-use App\User;
-use App\Item\Item;
+use App\Models\Users\User;
+use App\Models\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model

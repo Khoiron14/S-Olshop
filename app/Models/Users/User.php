@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models\Users;
 
-use App\Cart;
-use App\Store;
-use App\Image;
-use App\Item\Item;
-use App\Process\Purchase;
+use App\Models\Image;
+use App\Models\Users\Cart;
+use App\Models\Items\Item;
+use App\Models\Shops\Store;
+use App\Models\Process\Purchase;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -15,6 +15,8 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +38,7 @@ class User extends Authenticatable
 
     public function getImage()
     {
-        if (!$this->image()) {
+        if (!$this->image()->first()) {
             return null;
         }
 

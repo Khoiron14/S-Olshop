@@ -1,6 +1,6 @@
 <?php
 
-use App\Item\Item;
+use App\Models\Items\Item;
 use Faker\Generator as Faker;
 
 $factory->define(Item::class, function (Faker $faker) {

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shops;
 
 use Storage;
-use App\Store;
-use App\Item\Item;
-use App\Item\Category;
+use App\Models\Items\Item;
+use App\Models\Shops\Store;
+use App\Models\Items\Category;
 use App\Http\Requests\ItemRequest;
+use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
 {

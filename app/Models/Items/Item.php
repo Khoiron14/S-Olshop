@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Item;
+namespace App\Models\Items;
 
-use App\User;
-use App\Cart;
-use App\Store;
-use App\Image;
-use App\Item\Category;
-use App\Process\Purchase;
+use App\Models\Image;
+use App\Models\Users\User;
+use App\Models\Users\Cart;
+use App\Models\Shops\Store;
+use App\Models\Items\Category;
+use App\Models\Process\Purchase;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model

@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models\Shops;
 
-use App\User;
-use App\Image;
-use App\Item\Item;
+use App\Models\Image;
+use App\Models\Users\User;
+use App\Models\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
@@ -18,7 +18,7 @@ class Store extends Model
 
     public function getImage()
     {
-        if (!$this->image()) {
+        if (!$this->image()->first()) {
             return null;
         }
 

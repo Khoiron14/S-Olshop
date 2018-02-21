@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
-use App\Cart;
-use App\Item\Item;
+use App\Models\Users\Cart;
+use App\Models\Items\Item;
+use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
