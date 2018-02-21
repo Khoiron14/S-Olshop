@@ -24,11 +24,13 @@ class UsersSeeder extends Seeder
             'email' => 'sellerUser@example.com',
         ]);
         $user->assignRole('user', 'seller');
+        $user->image()->create(['path' => 'seeds/user.png']);
 
         $user = factory(User::class)->create([
             'name' => 'user',
             'email' => 'user@example.com',
         ]);
         $user->assignRole('user');
+        $user->image()->create(['path' => 'seeds/user.png']);
     }
 }
