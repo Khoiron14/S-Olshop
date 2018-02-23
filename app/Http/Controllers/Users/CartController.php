@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
-    const MINIMUM_QUANTITY = 1;
-
     public function index()
     {
         $carts = auth()->user()->carts()->get();
@@ -47,7 +45,7 @@ class CartController extends Controller
 
         $cart = auth()->user()->carts()->first();
 
-        if ($cart->quantity > self::MINIMUM_QUANTITY) {
+        if ($cart->quantity > Item::MINIMUM_QUANTITY) {
             $cart->update([
                 'quantity' => $cart->quantity - 1,
             ]);
