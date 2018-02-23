@@ -136,7 +136,7 @@
                             <form action="{{ route('item.destroy', [$item->store, $item]) }}" class="d-inline" method="post">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" name="delete">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger" id="delete" name="delete">Delete</button>
                             </form>
 
                         @else
