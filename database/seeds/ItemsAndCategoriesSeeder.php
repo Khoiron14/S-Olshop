@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Items\Item;
-use App\Models\Items\Category;
+use App\Models\Shops\Items\Item;
+use App\Models\Shops\Items\Category;
 use Illuminate\Database\Seeder;
 
 class ItemsAndCategoriesSeeder extends Seeder
