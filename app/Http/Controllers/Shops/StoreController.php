@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Shops;
 
 use Storage;
 use App\Models\Users\User;
-use App\Models\Items\Item;
 use App\Models\Shops\Store;
-use App\Models\Items\Category;
+use App\Models\Shops\Items\Item;
+use App\Models\Shops\Items\Category;
 use App\Http\Requests\StoreRequest;
 use App\Http\Controllers\Controller;
 

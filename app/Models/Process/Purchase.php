@@ -3,8 +3,8 @@
 namespace App\Models\Process;
 
 use App\Models\Users\User;
-use App\Models\Items\Item;
 use App\Models\Process\Status;
+use App\Models\Shops\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model

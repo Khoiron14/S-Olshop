@@ -3,7 +3,7 @@
 namespace App\Models\Users;
 
 use App\Models\Users\User;
-use App\Models\Items\Item;
+use App\Models\Shops\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model

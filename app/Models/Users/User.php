@@ -4,8 +4,8 @@ namespace App\Models\Users;
 
 use App\Models\Image;
 use App\Models\Users\Cart;
-use App\Models\Items\Item;
 use App\Models\Shops\Store;
+use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;

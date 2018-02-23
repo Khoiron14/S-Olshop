@@ -4,7 +4,7 @@ namespace App\Models\Shops;
 
 use App\Models\Image;
 use App\Models\Users\User;
-use App\Models\Items\Item;
+use App\Models\Shops\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
