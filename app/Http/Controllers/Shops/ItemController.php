@@ -32,7 +32,7 @@ class ItemController extends Controller
 
         $item = $store->items()->create($request->all());
         event(new Created($item));
-        
+
         alert()->success('Item has been added!');
 
         return redirect()->route('store.show', $request->store);
@@ -104,6 +104,7 @@ class ItemController extends Controller
         }
 
         $item->images()->delete();
+        $item->categories()->detach();
         $item->delete();
 
         alert()->success('item has been deleted!');
