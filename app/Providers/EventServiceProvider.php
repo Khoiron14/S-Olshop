@@ -13,8 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\Items\Created' => [
+            'App\Listeners\Items\Image',
+            'App\Listeners\Items\Category'
         ],
     ];
 

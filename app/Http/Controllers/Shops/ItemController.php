@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shops;
 
 use Storage;
+use App\Events\Items\Created;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Shops\Items\Category;
@@ -30,13 +31,8 @@ class ItemController extends Controller
         }
 
         $item = $store->items()->create($request->all());
-
-        foreach ($request->file('images') as $image) {
-            $item->images()->create(['path' => $image->store('items')]);
-        }
-
-        $item->categories()->sync(request('categoriesId'));
-
+        event(new Created($item));
+        
         alert()->success('Item has been added!');
 
         return redirect()->route('store.show', $request->store);
