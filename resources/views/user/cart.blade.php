@@ -34,14 +34,14 @@
                                     <td>
                                         <form action="{{ route('cart.store', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-light" name="cart">+</button>
+                                            <button type="submit" class="btn btn-light">+</button>
                                         </form>
                                         <form action="{{ route('cart.destroy', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
                                             @if ($cart->quantity == 1)
-                                                <button type="submit" id="delete" class="btn btn-light" name="cart">-</button>
+                                                <button type="submit" class="btn btn-light" name="delete">-</button>
                                             @else
-                                                <button type="submit" class="btn btn-light" name="cart">-</button>
+                                                <button type="submit" class="btn btn-light">-</button>
                                             @endif
                                         </form>
                                         <a href="#" class="btn btn-light">Buy</a>
