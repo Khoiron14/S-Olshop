@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
             $rules['name'] = 'required|max:25|unique:stores,name,' . $this->store->id;
         } else { // if user create store
             $rules['name'] = 'required|max:25|unique:stores';
-            $rules['domain'] = 'required|max:15|alpha_dash|unique:stores';
+            $rules['domain'] = 'required|max:15|alpha_dash|regex:/^[a-z0-9]+$/|unique:stores';
             $rules['image'] = 'required|image|mimes:jpeg,bmp,png';
         }
 
