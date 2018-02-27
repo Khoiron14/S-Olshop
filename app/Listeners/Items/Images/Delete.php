@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Listeners\Items;
+namespace App\Listeners\Items\Images;
 
-use App\Events\Items\Created;
+use Storage;
+use App\Events\Items\Updated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Image
+class Delete
 {
     protected $images;
-
     /**
      * Create the event listener.
      *
@@ -23,13 +23,17 @@ class Image
     /**
      * Handle the event.
      *
-     * @param  Created  $event
+     * @param  Updated  $event
      * @return void
      */
-    public function handle(Created $event)
+    public function handle(Updated $event)
     {
-        foreach ($this->images as $image) {
-            $event->item->images()->create(['path' => $image->store('items')]);
+        if ($this->images) {
+            foreach ($event->item->images()->get() as $image) {
+                Storage::delete($image->path);
+            }
+
+            $event->item->images()->delete();
         }
     }
 }

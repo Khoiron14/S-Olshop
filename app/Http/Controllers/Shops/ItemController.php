@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shops;
 
 use Storage;
 use App\Events\Items\Created;
+use App\Events\Items\Updated;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Shops\Items\Category;
@@ -66,20 +67,8 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        if ($request->file('images')) {
-            foreach ($item->images()->get() as $image) {
-                Storage::delete($image->path);
-            }
-
-            $item->images()->delete();
-
-            foreach ($request->file('images') as $image) {
-                $item->images()->create(['path' => $image->store('items')]);
-            }
-        }
-
         $item->update($request->all());
-        $item->categories()->sync(request('categoriesId'));
+        event(new Updated($item));
 
         alert()->success('item has been updated!');
 
