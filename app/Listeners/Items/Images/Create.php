@@ -37,7 +37,7 @@ class Create
     /**
      * Handle the event.
      *
-     * @param  Update  $event
+     * @param  Updated  $event
      * @return void
      */
     public function onUpdateItem(Updated $event)
