@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shops;
 
 use Storage;
+use App\Events\Stores\Created;
 use App\Models\Users\User;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
@@ -46,9 +47,7 @@ class StoreController extends Controller
         }
 
         $store = auth()->user()->store()->create($request->all());
-        $image = $request->file('image')->store('avatars/stores');
-        $store->image()->create(['path' => $image]);
-        auth()->user()->assignRole('seller');
+        event(new Created($store));
 
         alert()->success('You successfully registered store!');
 

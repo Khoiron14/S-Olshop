@@ -16,6 +16,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Items\Deleted' => [
             'App\Listeners\Items\Categories\Detach'
         ],
+
+        'App\Events\Stores\Created' => [
+            'App\Listeners\Stores\Images\Create',
+            'App\Listeners\Roles\Assign'
+        ],
     ];
 
     protected $subscribe = [
