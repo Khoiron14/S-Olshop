@@ -77,6 +77,6 @@
 <!-- Scripts -->
 @include('sweet::alert')
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/others/delete.js') }}"></script>
+<script src="{{ asset('js/others.js') }}"></script>
 </body>
 </html>

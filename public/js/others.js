@@ -1,4 +1,4 @@
-$('#delete').on('click',function(e){
+$('button[name=delete]').on('click',function(e){
     e.preventDefault();
     var form = $(this).parents('form');
     swal({
@@ -11,4 +11,8 @@ $('#delete').on('click',function(e){
     }, function(isConfirm){
         if (isConfirm) form.submit();
     });
+});
+
+$('input[name=domain]').keyup(function(){
+    $(this).val($(this).val().toLowerCase());
 });
