@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shops;
 use Storage;
 use App\Events\Items\Created;
 use App\Events\Items\Updated;
+use App\Events\Items\Deleted;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Shops\Items\Category;
@@ -88,13 +89,8 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        foreach ($item->images()->get() as $image) {
-            Storage::delete($image->path);
-        }
-
-        $item->images()->delete();
-        $item->categories()->detach();
         $item->delete();
+        event(new Deleted($item));
 
         alert()->success('item has been deleted!');
 
