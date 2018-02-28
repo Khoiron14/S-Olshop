@@ -9,15 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Delete
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    protected $items;
 
     /**
      * Handle the event.
@@ -27,10 +19,14 @@ class Delete
      */
     public function handle(DeleteStore $event)
     {
-        foreach ($event->store->items()->get() as $item) {
-            event(new DeleteItem($item));
-        }
+        $this->items = $event->store->items();
 
-        $event->store->items()->delete();
+        if ($this->items) {
+            foreach ($this->items->get() as $item) {
+                event(new DeleteItem($item));
+            }
+
+            $this->items->delete();
+        }
     }
 }
