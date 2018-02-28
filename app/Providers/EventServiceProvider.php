@@ -23,6 +23,7 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\Stores\Deleted' => [
             'App\Listeners\Roles\Remove',
+            'App\Listeners\Items\Delete'
         ],
     ];
 
