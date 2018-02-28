@@ -43,10 +43,8 @@ class Delete
      */
     public function onDeleteStore(Deleted $event)
     {
-        if ($this->image) {
-            Storage::delete($event->store->image()->first()->path);
-            $event->store->image()->delete();
-        }
+        Storage::delete($event->store->image()->first()->path);
+        $event->store->image()->delete();
     }
 
     public function subscribe($events)
