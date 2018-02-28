@@ -18,8 +18,11 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         'App\Events\Stores\Created' => [
-            'App\Listeners\Stores\Images\Create',
-            'App\Listeners\Roles\Assign'
+            'App\Listeners\Roles\Assign',
+        ],
+
+        'App\Events\Stores\Deleted' => [
+            'App\Listeners\Roles\Remove',
         ],
     ];
 
@@ -27,6 +30,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Listeners\Items\Images\Delete',
         'App\Listeners\Items\Images\Create',
         'App\Listeners\Items\Categories\Sync',
+        'App\Listeners\Stores\Images\Delete',
+        'App\Listeners\Stores\Images\Create',
     ];
 
     /**

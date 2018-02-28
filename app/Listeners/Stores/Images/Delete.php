@@ -2,12 +2,13 @@
 
 namespace App\Listeners\Stores\Images;
 
-use App\Events\Stores\Created;
+use Storage;
 use App\Events\Stores\Updated;
+use App\Events\Stores\Deleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Create
+class Delete
 {
     protected $image;
 
@@ -24,41 +25,40 @@ class Create
     /**
      * Handle the event.
      *
-     * @param  Created  $event
-     * @return void
-     */
-    public function onCreateStore(Created $event)
-    {
-        $event->store->image()->create([
-            'path' => $this->image->store('avatars/stores')
-        ]);
-    }
-
-    /**
-     * Handle the event.
-     *
      * @param  Updated  $event
      * @return void
      */
     public function onUpdateStore(Updated $event)
     {
         if ($this->image) {
-            $event->store->image()->update([
-                'path' => $this->image->store('avatars/stores')
-            ]);
+            Storage::delete($event->store->image()->first()->path);
+        }
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  Deleted  $event
+     * @return void
+     */
+    public function onDeleteStore(Deleted $event)
+    {
+        if ($this->image) {
+            Storage::delete($event->store->image()->first()->path);
+            $event->store->image()->delete();
         }
     }
 
     public function subscribe($events)
     {
         $events->listen(
-            'App\Events\Stores\Created',
-            'App\Listeners\Stores\Images\Create@onCreateStore'
+            'App\Events\Stores\Updated',
+            'App\Listeners\Stores\Images\Delete@onUpdateStore'
         );
 
         $events->listen(
-            'App\Events\Stores\Updated',
-            'App\Listeners\Stores\Images\Create@onUpdateStore'
+            'App\Events\Stores\Deleted',
+            'App\Listeners\Stores\Images\Delete@onDeleteStore'
         );
     }
 }

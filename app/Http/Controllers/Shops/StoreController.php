@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Shops;
 
 use Storage;
 use App\Events\Stores\Created;
+use App\Events\Stores\Updated;
+use App\Events\Stores\Deleted;
 use App\Models\Users\User;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
@@ -78,12 +80,7 @@ class StoreController extends Controller
     public function update(StoreRequest $request, Store $store)
     {
         $store->update($request->all());
-
-        if ($request->file('image')) {
-            Storage::delete($store->image()->first()->path);
-            $image = $request->file('image')->store('avatars/stores');
-            $store->image()->update(['path' => $image]);
-        }
+        event(new Updated($store));
 
         alert()->success('Store has been updated!');
 
@@ -102,10 +99,8 @@ class StoreController extends Controller
             return redirect()->back();
         }
 
-        $store->user->removeRole('seller');
-        Storage::delete($store->image()->first()->path);
-        $store->image()->delete();
         $store->delete();
+        event(new Deleted($store));
 
         alert()->success('Store has been deleted!');
 
