@@ -53,7 +53,19 @@
                             <label class="col-lg-4 col-form-label text-lg-right">Avatar</label>
 
                             <div class="col-lg-6">
-                                <input type="file" class="form-control-file" name="image" required>
+                                <input
+                                    type="file"
+                                    class="form-control-file"
+                                    name="image"
+                                    required
+                                >
+                                @if ($errors->has('image'))
+                                    <ul>
+                                        @foreach ($errors->get('image') as $error)
+                                            <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         </div>
 
