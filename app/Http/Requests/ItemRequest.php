@@ -36,8 +36,8 @@ class ItemRequest extends FormRequest
 
         // if user want to upload images
         if ($this->file('images')) {
-            foreach($this->file('images') as $index => $image) {
-                $rules['images.' . $index] = 'image|mimes:jpeg,bmp,png';
+            foreach($this->file('images') as $image) {
+                $rules['images'] = 'image|mimes:jpeg,bmp,png';
             }
         }
 

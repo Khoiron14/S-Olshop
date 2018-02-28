@@ -113,9 +113,9 @@
                                                         <img class="rounded" src="{{ asset('images/' . $image->path) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
                                                     <input type="file" class="form-control-file" name="images[]" multiple>
-                                                    @if (count($errors) > 0)
+                                                    @if ($errors->has('images'))
                                                         <ul>
-                                                            @foreach ($errors->all() as $error)
+                                                            @foreach ($errors->get('images') as $error)
                                                                 <strong class="text-danger"><li>{{ $error }}</li></strong>
                                                             @endforeach
                                                         </ul>

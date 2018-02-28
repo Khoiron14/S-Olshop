@@ -105,9 +105,9 @@
                                                         multiple
                                                         required
                                                     >
-                                                    @if (count($errors) > 0)
+                                                    @if ($errors->has('images'))
                                                         <ul>
-                                                            @foreach ($errors->all() as $error)
+                                                            @foreach ($errors->get('images') as $error)
                                                                 <strong class="text-danger"><li>{{ $error }}</li></strong>
                                                             @endforeach
                                                         </ul>
