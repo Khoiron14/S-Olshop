@@ -100,6 +100,13 @@
                                                     <label>Avatar :</label><br>
                                                     <img class="rounded" src="{{ auth()->user()->getImage() }}" alt="avatar" height="64" style="object-fit: cover; background-color: #ddd">
                                                     <input type="file" class="form-control-file d-inline" name="image">
+                                                    @if ($errors->has('image'))
+                                                        <ul>
+                                                            @foreach ($errors->get('image') as $error)
+                                                                <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">
