@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Storage;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
 class UpdateController extends Controller
@@ -13,7 +13,7 @@ class UpdateController extends Controller
         $this->middleware('auth');
     }
 
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
         if ($request->file('image')) {
             if ($request->user()->image()) {
@@ -25,10 +25,10 @@ class UpdateController extends Controller
         }
 
         auth()->user()->update([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'phone'     => $request->phone,
-            'address'   => $request->address,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
         ]);
 
         alert()->success('Profile has been updated!');
