@@ -31,14 +31,12 @@ class ItemRequest extends FormRequest
 
         // if adding item, image is required
         if (!$this->item) {
-            $rules['images'] = 'required';
+            $rules['images.*'] = 'required';
         }
 
         // if user want to upload images
         if ($this->file('images')) {
-            foreach($this->file('images') as $image) {
-                $rules['images'] = 'image|mimes:jpeg,bmp,png';
-            }
+            $rules['images.*'] = 'image|mimes:jpeg,bmp,png';
         }
 
         return $rules;
