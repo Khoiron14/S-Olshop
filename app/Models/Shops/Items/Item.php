@@ -11,9 +11,7 @@ use App\Models\Shops\Items\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
-{
-    const MINIMUM_QUANTITY = 1;
-    
+{    
     protected $fillable = ['name', 'price', 'stock'];
 
     public function getImage()

@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $carts = auth()->user()->carts()->get();
@@ -17,10 +22,6 @@ class CartController extends Controller
 
     public function store(Item $item)
     {
-        if (!auth()->user()->hasRole('user')) {
-            return redirect()->back();
-        }
-
         $cart = auth()->user()->carts()->whereItemId($item->id)->first();
 
         if ($cart) {
@@ -39,13 +40,9 @@ class CartController extends Controller
 
     public function destroy(Item $item)
     {
-        if (!auth()->user()->hasRole('user')) {
-            return redirect()->back();
-        }
-
         $cart = auth()->user()->carts()->first();
 
-        if ($cart->quantity > Item::MINIMUM_QUANTITY) {
+        if ($cart->quantity > Cart::MINIMUM_QUANTITY) {
             $cart->update([
                 'quantity' => $cart->quantity - 1,
             ]);
