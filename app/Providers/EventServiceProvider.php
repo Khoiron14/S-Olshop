@@ -28,11 +28,9 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     protected $subscribe = [
-        'App\Listeners\Items\Images\Delete',
-        'App\Listeners\Items\Images\Create',
+        'App\Listeners\Images\Delete',
+        'App\Listeners\Images\Create',
         'App\Listeners\Items\Categories\Sync',
-        'App\Listeners\Stores\Images\Delete',
-        'App\Listeners\Stores\Images\Create',
     ];
 
     /**
