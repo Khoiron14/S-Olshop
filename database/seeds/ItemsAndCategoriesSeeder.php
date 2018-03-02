@@ -22,6 +22,7 @@ class ItemsAndCategoriesSeeder extends Seeder
         $item = factory(Item::class)->create([
             'store_id' => 1,
             'name' => 'Lorem Ipsum',
+            'slug' => str_slug('Lorem Ipsum'),
         ]);
 
         $item->categories()->attach([$category1, $category5]);

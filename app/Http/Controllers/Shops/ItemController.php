@@ -32,7 +32,13 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        $item = $store->items()->create($request->all());
+        $item = $store->items()->create([
+            'name' => $request->name,
+            'slug' => str_slug($request->name),
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+
         event(new Created($item));
 
         alert()->success('Item has been added!');
@@ -68,7 +74,13 @@ class ItemController extends Controller
             return redirect()->back();
         }
 
-        $item->update($request->all());
+        $item->update([
+            'name' => $request->name,
+            'slug' => str_slug($request->name),
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+        
         event(new Updated($item));
 
         alert()->success('item has been updated!');
