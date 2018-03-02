@@ -11,8 +11,13 @@ use App\Models\Shops\Items\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
-{    
-    protected $fillable = ['name', 'price', 'stock'];
+{
+    protected $fillable = ['name', 'slug', 'price', 'stock'];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function getImage()
     {
