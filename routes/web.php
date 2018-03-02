@@ -22,8 +22,8 @@ Route::prefix('user')->group(function() {
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 
     Route::get('/cart', 'Users\CartController@index')->name('cart.index');
-    Route::post('/cart/item/{item}/add', 'Users\CartController@store')->name('cart.store');
-    Route::post('/cart/item/{item}/delete', 'Users\CartController@destroy')->name('cart.destroy');
+    Route::post('/cart/{item}/add', 'Users\CartController@store')->name('cart.store');
+    Route::post('/cart/{item}/delete', 'Users\CartController@destroy')->name('cart.destroy');
 });
 
 Route::resource('store', 'Shops\StoreController', ['except' => [
@@ -34,6 +34,8 @@ Route::prefix('{store}')->group(function() {
     Route::get('/', 'Shops\StoreController@show')->name('store.show');
 
     Route::resource('item', 'Shops\ItemController', ['except' => [
-        'index', 'create', 'edit'
+        'index', 'show', 'create', 'edit'
     ]]);
+
+    Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
 });
