@@ -3,6 +3,7 @@
 namespace App\Listeners\Images;
 
 use Storage;
+use App\Events\Users\Updated as UpdateUser;
 use App\Events\Stores\Updated as UpdateStore;
 use App\Events\Stores\Deleted as DeleteStore;
 use App\Events\Items\Updated as UpdateItem;
@@ -22,6 +23,19 @@ class Delete
     public function __construct()
     {
         $this->images = request()->file('images') ?: request()->file('image');
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  UpdateUser  $event
+     * @return void
+     */
+    public function onUpdateUser(UpdateUser $event)
+    {
+        if ($this->images) {
+            Storage::delete($event->user->image()->first()->path);
+        }
     }
 
     /**
@@ -83,6 +97,11 @@ class Delete
 
     public function subscribe($events)
     {
+        $events->listen(
+            'App\Events\Users\Updated',
+            'App\Listeners\Images\Delete@onUpdateUser'
+        );
+
         $events->listen(
             'App\Events\Stores\Updated',
             'App\Listeners\Images\Delete@onUpdateStore'

@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Images;
 
+use App\Events\Users\Updated as UpdateUser;
 use App\Events\Stores\Created as CreateStore;
 use App\Events\Stores\Updated as UpdateStore;
 use App\Events\Items\Created as CreateItem;
@@ -21,6 +22,21 @@ class Create
     public function __construct()
     {
         $this->images = request()->file('images') ?: request()->file('image');
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  UpdateUser  $event
+     * @return void
+     */
+    public function onUpdateUser(UpdateUser $event)
+    {
+        if ($this->images) {
+            $event->user->image()->update([
+                'path' => $this->images->store('avatars/users')
+            ]);
+        }
     }
 
     /**
@@ -60,7 +76,9 @@ class Create
     public function onCreateItem(CreateItem $event)
     {
         foreach ($this->images as $image) {
-            $event->item->images()->create(['path' => $image->store('items')]);
+            $event->item->images()->create([
+                'path' => $image->store('items')
+            ]);
         }
     }
 
@@ -74,13 +92,20 @@ class Create
     {
         if ($this->images) {
             foreach ($this->images as $image) {
-                $event->item->images()->create(['path' => $image->store('items')]);
+                $event->item->images()->create([
+                    'path' => $image->store('items')
+                ]);
             }
         }
     }
 
     public function subscribe($events)
     {
+        $events->listen(
+            'App\Events\Users\Updated',
+            'App\Listeners\Images\Create@onUpdateUser'
+        );
+
         $events->listen(
             'App\Events\Stores\Created',
             'App\Listeners\Images\Create@onCreateStore'
