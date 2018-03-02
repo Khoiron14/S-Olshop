@@ -15,27 +15,27 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::get('/admin', 'Auth\AdminController@index')->name('admin.index');
 
 Route::prefix('user')->group(function() {
     Route::get('/profile', 'Auth\ProfileController@show')->name('user.profile');
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 
-    Route::get('/cart', 'CartController@index')->name('cart.index');
-    Route::post('/cart/item/{item}/add', 'CartController@store')->name('cart.store');
-    Route::post('/cart/item/{item}/delete', 'CartController@destroy')->name('cart.destroy');
+    Route::get('/cart', 'Users\CartController@index')->name('cart.index');
+    Route::post('/cart/{item}/add', 'Users\CartController@store')->name('cart.store');
+    Route::post('/cart/{item}/delete', 'Users\CartController@destroy')->name('cart.destroy');
 });
 
-Route::resource('store', 'StoreController', ['except' => [
+Route::resource('store', 'Shops\StoreController', ['except' => [
     'index', 'show', 'edit'
 ]]);
 
 Route::prefix('{store}')->group(function() {
-    Route::get('/', 'StoreController@show')->name('store.show');
+    Route::get('/', 'Shops\StoreController@show')->name('store.show');
 
-    Route::resource('item', 'ItemController', ['except' => [
-        'index', 'create', 'edit'
+    Route::resource('item', 'Shops\ItemController', ['except' => [
+        'index', 'show', 'create', 'edit'
     ]]);
+
+    Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
 });

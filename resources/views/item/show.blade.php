@@ -113,7 +113,7 @@
                                                         <img class="rounded" src="{{ asset('images/' . $image->path) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
                                                     <input type="file" class="form-control-file" name="images[]" multiple>
-                                                    @if (count($errors) > 0)
+                                                    @if ($errors->has('images.*'))
                                                         <ul>
                                                             @foreach ($errors->all() as $error)
                                                                 <strong class="text-danger"><li>{{ $error }}</li></strong>
@@ -136,7 +136,7 @@
                             <form action="{{ route('item.destroy', [$item->store, $item]) }}" class="d-inline" method="post">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" name="delete">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger" name="delete">Delete</button>
                             </form>
 
                         @else

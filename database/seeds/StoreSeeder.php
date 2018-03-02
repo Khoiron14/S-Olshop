@@ -1,6 +1,6 @@
 <?php
 
-use App\Store;
+use App\Models\Shops\Store;
 use Illuminate\Database\Seeder;
 
 class StoreSeeder extends Seeder

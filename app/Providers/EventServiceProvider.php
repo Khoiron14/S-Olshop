@@ -13,9 +13,24 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\Items\Deleted' => [
+            'App\Listeners\Items\Categories\Detach'
         ],
+
+        'App\Events\Stores\Created' => [
+            'App\Listeners\Roles\Assign',
+        ],
+
+        'App\Events\Stores\Deleted' => [
+            'App\Listeners\Roles\Remove',
+            'App\Listeners\Items\Delete'
+        ],
+    ];
+
+    protected $subscribe = [
+        'App\Listeners\Images\Delete',
+        'App\Listeners\Images\Create',
+        'App\Listeners\Items\Categories\Sync',
     ];
 
     /**

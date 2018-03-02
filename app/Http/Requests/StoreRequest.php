@@ -29,9 +29,10 @@ class StoreRequest extends FormRequest
 
         if ($this->user()->hasRole('seller')) { // if seller want to update store
             $rules['name'] = 'required|max:25|unique:stores,name,' . $this->store->id;
+            $rules['image'] = 'image|mimes:jpeg,bmp,png';
         } else { // if user create store
             $rules['name'] = 'required|max:25|unique:stores';
-            $rules['domain'] = 'required|max:15|alpha_dash|unique:stores';
+            $rules['domain'] = 'required|max:15|alpha_dash|regex:/^[a-z0-9]+$/|unique:stores';
             $rules['image'] = 'required|image|mimes:jpeg,bmp,png';
         }
 

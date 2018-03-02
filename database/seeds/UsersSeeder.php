@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Models\Users\User;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -24,11 +24,13 @@ class UsersSeeder extends Seeder
             'email' => 'sellerUser@example.com',
         ]);
         $user->assignRole('user', 'seller');
+        $user->image()->create(['path' => 'seeds/user.png']);
 
         $user = factory(User::class)->create([
             'name' => 'user',
             'email' => 'user@example.com',
         ]);
         $user->assignRole('user');
+        $user->image()->create(['path' => 'seeds/user.png']);
     }
 }
