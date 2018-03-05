@@ -13,6 +13,6 @@ class Status extends Model
 
     public function purchases()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->belongsTo(Purchase::class);
     }
 }
