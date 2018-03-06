@@ -26,12 +26,12 @@ class CartController extends Controller
 
         if ($cart) {
             $cart->update([
-                'quantity' => $cart->quantity + 1,
+                'quantity' => $cart->quantity + Cart::MINIMUM_QUANTITY,
             ]);
         } else {
             $cart = auth()->user()->carts()->create([
                 'item_id' => $item->id,
-                'quantity' => 1,
+                'quantity' => Cart::MINIMUM_QUANTITY,
             ]);
         }
 
@@ -44,7 +44,7 @@ class CartController extends Controller
 
         if ($cart->quantity > Cart::MINIMUM_QUANTITY) {
             $cart->update([
-                'quantity' => $cart->quantity - 1,
+                'quantity' => $cart->quantity - Cart::MINIMUM_QUANTITY,
             ]);
 
             return redirect()->back();
