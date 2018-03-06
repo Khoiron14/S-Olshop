@@ -39,3 +39,5 @@ Route::prefix('{store}')->group(function() {
 
     Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
 });
+
+Route::post('purchase/{item}', 'Shops\PurchaseController@store')->name('purchase.store');
