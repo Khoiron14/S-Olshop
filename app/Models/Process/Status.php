@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    const CONFIRMED = 1;
+    const PENDING = 2;
+    const CANCELLED = 3;
+
     public $timestamps = false;
 
     protected $guarded = [];
