@@ -25,6 +25,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Roles\Remove',
             'App\Listeners\Items\Delete'
         ],
+
+        'App\Events\Items\Purchased' => [
+            'App\Listeners\Items\Update',
+            'App\Listeners\Users\Carts\Delete'
+        ],
     ];
 
     protected $subscribe = [
