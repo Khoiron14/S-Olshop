@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::all()->sortByDesc('updated_at');
 
         return view('home', compact('items'));
     }
