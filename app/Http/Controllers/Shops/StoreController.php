@@ -106,4 +106,15 @@ class StoreController extends Controller
 
         return redirect()->route('admin.index');
     }
+
+    public function showPurchase(Store $store)
+    {
+        if (!auth()->user()->hasRole('seller')) {
+            return redirect()->back();
+        }
+
+        $purchases = $store->purchases()->get()->sortByDesc('created_at');
+
+        return view('store.purchase', compact('purchases'));
+    }
 }
