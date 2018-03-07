@@ -21,6 +21,8 @@ Route::prefix('user')->group(function() {
     Route::get('/profile', 'Auth\ProfileController@show')->name('user.profile');
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 
+    Route::get('/purchase', 'Shops\PurchaseController@show')->name('user.purchase');
+
     Route::get('/cart', 'Users\CartController@index')->name('cart.index');
     Route::post('/cart/{item}/add', 'Users\CartController@store')->name('cart.store');
     Route::post('/cart/{item}/delete', 'Users\CartController@destroy')->name('cart.destroy');
@@ -32,6 +34,7 @@ Route::resource('store', 'Shops\StoreController', ['except' => [
 
 Route::prefix('{store}')->group(function() {
     Route::get('/', 'Shops\StoreController@show')->name('store.show');
+    Route::get('/purchase', 'Shops\StoreController@showPurchase')->name('store.purchase');
 
     Route::resource('item', 'Shops\ItemController', ['except' => [
         'index', 'show', 'create', 'edit'
@@ -40,4 +43,6 @@ Route::prefix('{store}')->group(function() {
     Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
 });
 
-Route::post('purchase/{item}', 'Shops\PurchaseController@store')->name('purchase.store');
+Route::post('/purchase/{item}', 'Shops\PurchaseController@store')->name('purchase.store');
+Route::patch('/purchase/{purchase}/confirm', 'Shops\PurchaseController@confirm')->name('purchase.confirm');
+Route::patch('/purchase/{purchase}/cancel', 'Shops\PurchaseController@cancel')->name('purchase.cancel');
