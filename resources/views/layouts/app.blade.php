@@ -46,15 +46,14 @@
                                <i class="fa fa-user fa-lg fa-border" aria-hidden="true"></i> {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
+
                                 @if (Auth::user()->hasRole('admin'))
                                     <a href="{{ route('admin.index') }}" class="dropdown-item">Admin Page</a>
-                                @elseif (Auth::user()->hasRole('seller', 'user'))
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
-
+                                @elseif (Auth::user()->hasRole('seller'))
                                     <a href="{{ route('store.show', Auth::user()->store) }}" class="dropdown-item">Store Page</a>
-                                @else
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
                                 @endif
+                                <a href="{{ route('user.purchase') }}" class="dropdown-item">Purchase</a>
 
                                 <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout
