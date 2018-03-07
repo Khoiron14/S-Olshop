@@ -4,6 +4,7 @@ namespace App\Models\Shops;
 
 use App\Models\Image;
 use App\Models\Users\User;
+use App\Models\Process\Purchase;
 use App\Models\Shops\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,5 +39,10 @@ class Store extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasManyThrough(Purchase::class, Item::class);
     }
 }
