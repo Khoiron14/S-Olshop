@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shops;
 use App\Events\Items\Purchased;
 use App\Models\Shops\Store;
 use App\Models\Process\Status;
+use App\Models\Process\StatusBy;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
 use App\Http\Controllers\Controller;
@@ -12,14 +13,9 @@ use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     /**
@@ -40,7 +36,8 @@ class PurchaseController extends Controller
             'item_id' => $item->id,
             'quantity' => $request->quantity,
             'price' => $item->price * $request->quantity,
-            'status_id' => Status::PENDING
+            'status_id' => Status::PENDING,
+            'status_by_id' => StatusBy::SYSTEM
         ]);
 
         event(new Purchased($purchase));
@@ -54,9 +51,11 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $purchases = auth()->user()->purchases()->get()->sortByDesc('created_at');
+
+        return view('user.purchase', compact('purchases'));
     }
 
     /**
@@ -82,14 +81,35 @@ class PurchaseController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function confirm(Purchase $purchase)
     {
-        //
+        if (!auth()->user()->hasRole('seller')) {
+            return redirect()->back();
+        }
+
+        $purchase->update([
+            'status_id' => Status::CONFIRMED,
+            'status_by_id' => StatusBy::SELLER
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function cancel(Purchase $purchase)
+    {
+        if (auth()->user()->hasRole('seller')) {
+            $statusBy = StatusBy::SELLER;
+        } elseif (auth()->user()->hasRole('user')) {
+            $statusBy = StatusBy::USER;
+        } else {
+            $statusBy = StatusBy::SYSTEM;
+        }
+
+        $purchase->update([
+            'status_id' => Status::CANCELLED,
+            'status_by_id' => $statusBy
+        ]);
+
+        return redirect()->back();
     }
 }
