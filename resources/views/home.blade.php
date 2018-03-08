@@ -22,6 +22,7 @@
                     </div>
                 @endforeach
             </div>
+            {!! $items->render() !!}
         </div>
     </div>
 </div>

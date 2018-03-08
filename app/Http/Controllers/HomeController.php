@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $items = Item::all()->sortByDesc('updated_at');
+        $items = Item::latest()->paginate(9);
 
         return view('home', compact('items'));
     }
