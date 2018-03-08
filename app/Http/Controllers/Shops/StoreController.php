@@ -113,7 +113,7 @@ class StoreController extends Controller
             return redirect()->back();
         }
 
-        $purchases = $store->purchases()->get()->sortByDesc('created_at');
+        $purchases = $store->purchases()->latest()->get();
 
         return view('store.purchase', compact('purchases'));
     }

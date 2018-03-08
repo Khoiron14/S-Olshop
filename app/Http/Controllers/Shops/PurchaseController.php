@@ -53,7 +53,7 @@ class PurchaseController extends Controller
      */
     public function show()
     {
-        $purchases = auth()->user()->purchases()->get()->sortByDesc('created_at');
+        $purchases = auth()->user()->purchases()->latest()->get();
 
         return view('user.purchase', compact('purchases'));
     }
