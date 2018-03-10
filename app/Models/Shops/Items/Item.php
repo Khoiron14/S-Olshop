@@ -9,9 +9,12 @@ use App\Models\Shops\Store;
 use App\Models\Process\Purchase;
 use App\Models\Shops\Items\Category;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Item extends Model
 {
+    use Searchable;
+
     protected $fillable = ['name', 'slug', 'price', 'stock'];
 
     public function getRouteKeyName()
