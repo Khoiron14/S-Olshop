@@ -15,6 +15,7 @@
                     @if (Auth::user()->id == $store->user->id)
                         <div class="float-right">
                             <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#addItem">Add Item</button>
+                            <a href="{{ route('store.purchase', $store) }}" class="white btn btn-sm btn-warning">Purchase Request</a>
 
                             {{-- modal form for add item --}}
                             <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-hidden="true">

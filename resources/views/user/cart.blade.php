@@ -44,7 +44,11 @@
                                                 <button type="submit" class="btn btn-light">-</button>
                                             @endif
                                         </form>
-                                        <a href="#" class="btn btn-light">Buy</a>
+                                        <form action="{{ route('purchase.store', $cart->item) }}" class="d-inline" method="post">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
+                                            <button type="submit" class="btn btn-light">Buy</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

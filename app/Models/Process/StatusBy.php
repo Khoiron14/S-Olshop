@@ -5,11 +5,11 @@ namespace App\Models\Process;
 use App\Models\Process\Purchase;
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class StatusBy extends Model
 {
-    const CONFIRMED = 1;
-    const PENDING = 2;
-    const CANCELLED = 3;
+    const USER = 1;
+    const SELLER = 2;
+    const SYSTEM = 3;
 
     public $timestamps = false;
 

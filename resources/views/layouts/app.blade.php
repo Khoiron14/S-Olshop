@@ -46,15 +46,14 @@
                                <i class="fa fa-user fa-lg fa-border" aria-hidden="true"></i> {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
+
                                 @if (Auth::user()->hasRole('admin'))
                                     <a href="{{ route('admin.index') }}" class="dropdown-item">Admin Page</a>
-                                @elseif (Auth::user()->hasRole('seller', 'user'))
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
-
+                                @elseif (Auth::user()->hasRole('seller'))
                                     <a href="{{ route('store.show', Auth::user()->store) }}" class="dropdown-item">Store Page</a>
-                                @else
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
                                 @endif
+                                <a href="{{ route('user.purchase') }}" class="dropdown-item">Purchase</a>
 
                                 <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout
@@ -72,6 +71,12 @@
     </nav>
 
     @yield('content')
+
+    <footer class="mt-5 text-right">
+        <div class="mr-5">
+            <p>Vheriv3 </a> 2017. <i class="fa fa-code" aria-hidden="true"></i> with <i class="fa fa-heart text-danger" aria-hidden="true"></i> in Surabaya</p>
+        </div>
+    </footer>
 </div>
 
 <!-- Scripts -->

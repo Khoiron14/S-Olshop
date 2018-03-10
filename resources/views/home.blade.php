@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="container">
+
+    <form class="mt-5" action="{{ route('home.search') }}" method="get">
+        <div class="input-group">
+            <input class="form-control" type="search" name="q" placeholder="Search item here...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+            </div>
+        </div>
+    </form>
+
     <div class="row mt-5">
         <div class="col-md-10 offset-md-1">
             <div class="row">
@@ -22,6 +32,7 @@
                     </div>
                 @endforeach
             </div>
+            {!! $items->render() !!}
         </div>
     </div>
 </div>

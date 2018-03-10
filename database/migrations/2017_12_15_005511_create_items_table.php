@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('store_id');
             $table->string('name');
             $table->string('slug');
-            $table->unsignedInteger('price');
+            $table->double('price');
             $table->unsignedInteger('stock');
             $table->timestamps();
         });
