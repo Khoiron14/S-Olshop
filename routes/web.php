@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/search', 'HomeController@search')->name('home.search');
 
 Auth::routes();
 
