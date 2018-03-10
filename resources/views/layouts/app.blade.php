@@ -71,6 +71,12 @@
     </nav>
 
     @yield('content')
+
+    <footer class="mt-5 text-right">
+        <div class="mr-5">
+            <p>Vheriv3 </a> 2017. <i class="fa fa-code" aria-hidden="true"></i> with <i class="fa fa-heart text-danger" aria-hidden="true"></i> in Surabaya</p>
+        </div>
+    </footer>
 </div>
 
 <!-- Scripts -->
