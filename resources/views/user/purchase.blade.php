@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                             @foreach ($purchases as $purchase)
-                                <tr  class="{{ ($purchase->status->name == 'confirmed') ? 'table-success' : (($purchase->status->name == 'cancelled') ? 'table-danger' : 'table-primary')}}">
+                                <tr>
                                     <th scope="row">{{ $purchase->id }}</th>
                                     <td>
                                         <a href="{{ route('item.show',  [$purchase->item->store, $purchase->item]) }}">
@@ -32,9 +32,11 @@
                                     </td>
                                     <td>Rp {{ number_format($purchase->quantity * $purchase->item->price) }}</td>
                                     <td>{{ $purchase->quantity }}</td>
-                                    <td>{{ $purchase->status->name }} by {{ $purchase->statusBy->name }}</td>
+                                    <td class="{{ ($purchase->status->name == 'confirmed') ? 'text-success' : (($purchase->status->name == 'cancelled') ? 'text-danger' : 'text-primary')}}">
+                                      {{ $purchase->status->name }} by {{ $purchase->statusBy->name }}
+                                    </td>
                                     <td>
-                                        @if (!$purchase->status->name == 'pending')
+                                        @if ($purchase->status->name == 'pending')
                                             <form action="{{ route('purchase.cancel', $purchase) }}" class="d-inline" method="post">
                                                 {{ csrf_field() }}
                                                 {{ method_field('PATCH') }}
