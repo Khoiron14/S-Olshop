@@ -23,7 +23,7 @@
                                 <h5 class="card-title">
                                     <a href="{{ route('item.show', [$item->store, $item]) }}">{{ $item->name }}</a>
                                 </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Rp {{ number_format($item->price) }}</h6>
+                                <h6 class="card-subtitle text-muted">Rp {{ number_format($item->price) }}</h6>
                             </div>
                             <div class="card-footer text-muted">
                                 Dijual oleh : <a href="{{ route('store.show', $item->store) }}" class="card-link">{{ $item->store->name }}</a>
