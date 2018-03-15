@@ -4,7 +4,6 @@ namespace App\Models\Process;
 
 use App\Models\Users\User;
 use App\Models\Process\Status;
-use App\Models\Process\StatusBy;
 use App\Models\Shops\Items\Item;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,10 +24,5 @@ class Purchase extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
-    }
-
-    public function statusBy()
-    {
-        return $this->belongsTo(StatusBy::class);
     }
 }

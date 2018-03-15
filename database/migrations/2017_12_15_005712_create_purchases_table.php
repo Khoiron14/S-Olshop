@@ -20,7 +20,6 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('quantity');
             $table->double('price');
             $table->unsignedInteger('status_id');
-            $table->unsignedInteger('status_by_id');
             $table->timestamps();
         });
     }
