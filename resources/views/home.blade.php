@@ -7,7 +7,7 @@
         <div class="input-group">
             <input class="form-control" type="search" name="q" placeholder="Search item here...">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                <button class="btn btn-primary" type="submit"><i class="ion-ios-search ion-sm"></i> Search</button>
             </div>
         </div>
     </form>

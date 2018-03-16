@@ -36,14 +36,14 @@
                     @else
                         <li class="nav-item">
                             <a href="{{ route('cart.index') }}" class="nav-link">
-                                <i class="fa fa-shopping-cart fa-lg fa-border" aria-hidden="true"></i> Cart
+                                <i class="ion-ios-cart ion-2x"></i> Cart
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                               <i class="fa fa-user fa-lg fa-border" aria-hidden="true"></i> {{ Auth::user()->name }}
+                               <i class="ion-ios-contact ion-2x"></i> {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
@@ -74,7 +74,7 @@
 
     <footer class="mt-5 text-right">
         <div class="mr-5">
-            <p>Vheriv3 </a> 2017. <i class="fa fa-code" aria-hidden="true"></i> with <i class="fa fa-heart text-danger" aria-hidden="true"></i> in Surabaya</p>
+            <p>Vheriv3 </a> 2017. <i class="ion-md-build text-primary"></i> with <i class="ion-md-heart text-danger"></i> in Surabaya</p>
         </div>
     </footer>
 </div>

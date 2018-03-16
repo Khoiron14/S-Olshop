@@ -143,7 +143,7 @@
                             {{-- add to cart for other user --}}
                             <form action="{{ route('cart.store', $item) }}" method="post">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-sm btn-light" name="cart"><i class="fa fa-cart-plus fa-lg" aria-hidden="true"></i> Cart</button>
+                                <button type="submit" class="btn btn-sm btn-light" name="cart"><i class="ion-ios-cart ion-sm"></i> Cart</button>
                             </form>
                         @endif
                     </div>
