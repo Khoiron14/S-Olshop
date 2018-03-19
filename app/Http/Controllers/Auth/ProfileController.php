@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
@@ -12,12 +11,8 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public function show(Request $request)
+    public function show()
     {
-        if (! $request->user()->hasRole('user')) {
-            return redirect()->route('home');
-        }
-
         return view('user.profile');
     }
 }
