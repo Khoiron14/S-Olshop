@@ -72,9 +72,9 @@
 
     @yield('content')
 
-    <footer class="mt-5 text-right">
-        <div class="mr-5">
-            <p>Vheriv3 </a> 2017. <i class="ion-md-build text-primary"></i> with <i class="ion-md-heart text-danger"></i> in Surabaya</p>
+    <footer class="mt-5 bg-secondary" style="box-shadow: 0 1px 2px 3px rgba(0, 0, 0, 0.30)">
+        <div class="text-right mr-5 pt-1 pb-1">
+            <p class="mb-3 mt-3 text-white">Vheriv3 </a> 2017. <i class="ion-ios-paper-plane ion-sm text-warning"></i> with <i class="ion-md-heart ion-sm text-danger"></i> in Surabaya</p>
         </div>
     </footer>
 </div>
