@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Shops;
 
-use Storage;
 use App\Events\Items\Created;
 use App\Events\Items\Updated;
 use App\Events\Items\Deleted;
@@ -20,7 +19,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
@@ -28,7 +26,7 @@ class ItemController extends Controller
      */
     public function store(ItemRequest $request, Store $store)
     {
-        if (!auth()->user()->hasPermissionTo('post item')) {
+        if (!auth()->user()->can('sell item')) {
             return redirect()->back();
         }
 
@@ -49,8 +47,8 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Item\Item  $item
      * @param  \App\Store  $store
+     * @param  \App\Item\Item  $item
      * @return \Illuminate\Http\Response
      */
     public function show(Store $store, Item $item)
@@ -61,7 +59,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\ItemRequest  $request
      * @param  \App\Store  $store
@@ -80,7 +77,7 @@ class ItemController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
         ]);
-        
+
         event(new Updated($item));
 
         alert()->success('item has been updated!');
@@ -89,7 +86,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
      *
      * @param  \App\Store  $store
      * @param  \App\Item\Item  $item
@@ -102,6 +98,7 @@ class ItemController extends Controller
         }
 
         $item->delete();
+
         event(new Deleted($item));
 
         alert()->success('item has been deleted!');

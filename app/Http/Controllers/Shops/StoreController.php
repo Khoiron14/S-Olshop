@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Shops;
 
-use Storage;
 use App\Events\Stores\Created;
 use App\Events\Stores\Updated;
 use App\Events\Stores\Deleted;
@@ -28,8 +27,8 @@ class StoreController extends Controller
     public function create()
     {
         if (!(auth()->user()->hasRole('user'))) {
-            return redirect('/');
-        } elseif (auth()->user()->hasrole('seller')) {
+            return redirect()->back();
+        } elseif (auth()->user()->hasRole('seller')) {
             return redirect()->route('store.show', auth()->user()->store);
         }
 
@@ -37,7 +36,6 @@ class StoreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreRequest  $request
      * @return \Illuminate\Http\Response
@@ -45,10 +43,11 @@ class StoreController extends Controller
     public function store(StoreRequest $request)
     {
         if (!(auth()->user()->hasRole('user'))) {
-            return redirect('/');
+            return redirect()->back();
         }
 
         $store = auth()->user()->store()->create($request->all());
+
         event(new Created($store));
 
         alert()->success('You successfully registered store!');
@@ -71,7 +70,6 @@ class StoreController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\StoreRequest  $request
      * @param  \App\Store  $store
@@ -79,6 +77,10 @@ class StoreController extends Controller
      */
     public function update(StoreRequest $request, Store $store)
     {
+        if (!auth()->user()->hasRole('seller')) {
+            return redirect()->back();
+        }
+
         $store->update($request->all());
         event(new Updated($store));
 
@@ -88,14 +90,13 @@ class StoreController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
      *
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
     public function destroy(Store $store)
     {
-        if (!auth()->user()->hasPermissionTo('delete seller')) {
+        if (!auth()->user()->can('delete seller')) {
             return redirect()->back();
         }
 
