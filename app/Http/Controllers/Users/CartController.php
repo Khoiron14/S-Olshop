@@ -29,7 +29,7 @@ class CartController extends Controller
                 'quantity' => $cart->quantity + Cart::MINIMUM_QUANTITY,
             ]);
         } else {
-            $cart = auth()->user()->carts()->create([
+            auth()->user()->carts()->create([
                 'item_id' => $item->id,
                 'quantity' => Cart::MINIMUM_QUANTITY,
             ]);
@@ -40,7 +40,7 @@ class CartController extends Controller
 
     public function destroy(Item $item)
     {
-        $cart = auth()->user()->carts()->first();
+        $cart = auth()->user()->carts()->whereItemId($item->id)->first();
 
         if ($cart->quantity > Cart::MINIMUM_QUANTITY) {
             $cart->update([
