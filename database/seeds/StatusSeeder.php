@@ -12,10 +12,10 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        $status = Status::create(['name' => 'Confirmed by Seller']);
-        $status = Status::create(['name' => 'Pending by System']);
-        $status = Status::create(['name' => 'Cancelled by Seller']);
-        $status = Status::create(['name' => 'Cancelled by System']);
-        $status = Status::create(['name' => 'Cancelled by User']);
+        Status::create(['name' => 'Confirmed by Seller']);
+        Status::create(['name' => 'Pending by System']);
+        Status::create(['name' => 'Cancelled by Seller']);
+        Status::create(['name' => 'Cancelled by System']);
+        Status::create(['name' => 'Cancelled by User']);
     }
 }
