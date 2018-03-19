@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Shops;
 use App\Events\Items\Purchased;
 use App\Models\Shops\Store;
 use App\Models\Process\Status;
-use App\Models\Process\StatusBy;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
 use App\Http\Controllers\Controller;
@@ -18,14 +17,12 @@ class PurchaseController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Item $item)
     {
+        if (!auth()->user()->can('purchase item')) {
+            return redirect()->back();
+        }
+
         if ($item->stock < $request->quantity) {
             alert()->warning('not enough stock');
 
@@ -36,8 +33,7 @@ class PurchaseController extends Controller
             'item_id' => $item->id,
             'quantity' => $request->quantity,
             'price' => $item->price * $request->quantity,
-            'status_id' => Status::PENDING,
-            'status_by_id' => StatusBy::SYSTEM
+            'status_id' => Status::SYSTEM_PENDING,
         ]);
 
         event(new Purchased($purchase));
@@ -45,12 +41,6 @@ class PurchaseController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show()
     {
         $purchases = auth()->user()->purchases()->latest()->get();
@@ -58,57 +48,32 @@ class PurchaseController extends Controller
         return view('user.purchase', compact('purchases'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function confirm(Purchase $purchase)
     {
-        if (!auth()->user()->hasRole('seller')) {
+        if (!auth()->user()->can('confirm purchase')) {
             return redirect()->back();
         }
 
-        $purchase->update([
-            'status_id' => Status::CONFIRMED,
-            'status_by_id' => StatusBy::SELLER
-        ]);
+        $purchase->update(['status_id' => $status]);
 
         return redirect()->back();
     }
 
     public function cancel(Purchase $purchase)
     {
-        if (auth()->user()->hasRole('seller')) {
-            $statusBy = StatusBy::SELLER;
-        } elseif (auth()->user()->hasRole('user')) {
-            $statusBy = StatusBy::USER;
-        } else {
-            $statusBy = StatusBy::SYSTEM;
+        if (!auth()->user()->can('cancel purchase')) {
+            return redirect()->back();
         }
 
-        $purchase->update([
-            'status_id' => Status::CANCELLED,
-            'status_by_id' => $statusBy
-        ]);
+        if (auth()->user()->hasRole('seller')) {
+            $status = Status::SELLER_CANCEL;
+        } elseif (auth()->user()->hasRole('user')) {
+            $status = Status::USER_CANCEL;
+        } else {
+            $status = Status::SYSTEM_CANCEL;
+        }
+
+        $purchase->update(['status_id' => $status]);
 
         return redirect()->back();
     }

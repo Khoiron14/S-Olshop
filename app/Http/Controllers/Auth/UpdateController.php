@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Storage;
 use App\Events\Users\Updated;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;

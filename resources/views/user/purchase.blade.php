@@ -32,15 +32,13 @@
                                     </td>
                                     <td>Rp {{ number_format($purchase->quantity * $purchase->item->price) }}</td>
                                     <td>{{ $purchase->quantity }}</td>
-                                    <td class="{{ ($purchase->status->name == 'confirmed') ? 'text-success' : (($purchase->status->name == 'cancelled') ? 'text-danger' : 'text-primary')}}">
-                                      {{ $purchase->status->name }} by {{ $purchase->statusBy->name }}
-                                    </td>
+                                    <td class="{{ $purchase->status->getColor() }}">{{ $purchase->status->name }}</td>
                                     <td>
-                                        @if ($purchase->status->name == 'pending')
+                                        @if ($purchase->status->isType('pending'))
                                             <form action="{{ route('purchase.cancel', $purchase) }}" class="d-inline" method="post">
                                                 {{ csrf_field() }}
                                                 {{ method_field('PATCH') }}
-                                                <button type="submit" class="btn btn-danger" name="delete">Cancel</button>
+                                                <button type="submit" class="btn btn-sm btn-danger" name="delete">Cancel</button>
                                             </form>
                                         @endif
                                     </td>

@@ -20,7 +20,7 @@
         "vue": "^2.5.14"
     },
     "dependencies": {
-        "font-awesome": "^4.7.0",
+        "ionicons": "^3.0.0",
         "marked": "^0.3.17",
         "vue-template-compiler": "^2.5.14"
     }

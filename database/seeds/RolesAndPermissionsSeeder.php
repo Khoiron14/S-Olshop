@@ -18,7 +18,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         //create permissions
         Permission::create(['name' => 'delete seller']);
-        Permission::create(['name' => 'post item']);
+        Permission::create(['name' => 'sell item']);
         Permission::create(['name' => 'edit item']);
         Permission::create(['name' => 'delete item']);
         Permission::create(['name' => 'purchase item']);
@@ -32,7 +32,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo('cancel purchase');
 
         $role = Role::create(['name' => 'seller']);
-        $role->givePermissionTo('post item');
+        $role->givePermissionTo('sell item');
         $role->givePermissionTo('edit item');
         $role->givePermissionTo('delete item');
         $role->givePermissionTo('confirm purchase');

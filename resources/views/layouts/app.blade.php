@@ -18,7 +18,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" style="box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15)">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -36,14 +36,14 @@
                     @else
                         <li class="nav-item">
                             <a href="{{ route('cart.index') }}" class="nav-link">
-                                <i class="fa fa-shopping-cart fa-lg fa-border" aria-hidden="true"></i> Cart
+                                <i class="ion-ios-cart ion-2x"></i> Cart
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                               <i class="fa fa-user fa-lg fa-border" aria-hidden="true"></i> {{ Auth::user()->name }}
+                               <i class="ion-ios-contact ion-2x"></i> {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
@@ -72,9 +72,9 @@
 
     @yield('content')
 
-    <footer class="mt-5 text-right">
-        <div class="mr-5">
-            <p>Vheriv3 </a> 2017. <i class="fa fa-code" aria-hidden="true"></i> with <i class="fa fa-heart text-danger" aria-hidden="true"></i> in Surabaya</p>
+    <footer class="mt-5 bg-secondary" style="box-shadow: 0 1px 2px 3px rgba(0, 0, 0, 0.30)">
+        <div class="text-right mr-5 pt-1 pb-1">
+            <p class="mb-3 mt-3 text-white">Vheriv3 </a> 2017. <i class="ion-ios-paper-plane ion-sm text-warning"></i> with <i class="ion-md-heart ion-sm text-danger"></i> in Surabaya</p>
         </div>
     </footer>
 </div>

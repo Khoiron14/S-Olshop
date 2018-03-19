@@ -2,11 +2,12 @@
 
 namespace App\Listeners\Images;
 
+use App\Events\Users\Created as CreateUser;
 use App\Events\Users\Updated as UpdateUser;
-use App\Events\Stores\Created as CreateStore;
-use App\Events\Stores\Updated as UpdateStore;
 use App\Events\Items\Created as CreateItem;
 use App\Events\Items\Updated as UpdateItem;
+use App\Events\Stores\Created as CreateStore;
+use App\Events\Stores\Updated as UpdateStore;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -27,6 +28,19 @@ class Create
     /**
      * Handle the event.
      *
+     * @param  CreateUser  $event
+     * @return void
+     */
+    public function onCreateUser(CreateUser $event)
+    {
+        $event->user->image()->create([
+            'path' => $this->images->store('avatars/users')
+        ]);
+    }
+
+    /**
+     * Handle the event.
+     *
      * @param  UpdateUser  $event
      * @return void
      */
@@ -35,34 +49,6 @@ class Create
         if ($this->images) {
             $event->user->image()->update([
                 'path' => $this->images->store('avatars/users')
-            ]);
-        }
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @param  CreateStore  $event
-     * @return void
-     */
-    public function onCreateStore(CreateStore $event)
-    {
-        $event->store->image()->create([
-            'path' => $this->images->store('avatars/stores')
-        ]);
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @param  UpdateStore  $event
-     * @return void
-     */
-    public function onUpdateStore(UpdateStore $event)
-    {
-        if ($this->images) {
-            $event->store->image()->update([
-                'path' => $this->images->store('avatars/stores')
             ]);
         }
     }
@@ -99,21 +85,44 @@ class Create
         }
     }
 
+    /**
+     * Handle the event.
+     *
+     * @param  CreateStore  $event
+     * @return void
+     */
+    public function onCreateStore(CreateStore $event)
+    {
+        $event->store->image()->create([
+            'path' => $this->images->store('avatars/stores')
+        ]);
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  UpdateStore  $event
+     * @return void
+     */
+    public function onUpdateStore(UpdateStore $event)
+    {
+        if ($this->images) {
+            $event->store->image()->update([
+                'path' => $this->images->store('avatars/stores')
+            ]);
+        }
+    }
+
     public function subscribe($events)
     {
         $events->listen(
+            'App\Events\Users\Created',
+            'App\Listeners\Images\Create@onCreateUser'
+        );
+
+        $events->listen(
             'App\Events\Users\Updated',
             'App\Listeners\Images\Create@onUpdateUser'
-        );
-
-        $events->listen(
-            'App\Events\Stores\Created',
-            'App\Listeners\Images\Create@onCreateStore'
-        );
-
-        $events->listen(
-            'App\Events\Stores\Updated',
-            'App\Listeners\Images\Create@onUpdateStore'
         );
 
         $events->listen(
@@ -124,6 +133,16 @@ class Create
         $events->listen(
             'App\Events\Items\Updated',
             'App\Listeners\Images\Create@onUpdateItem'
+        );
+
+        $events->listen(
+            'App\Events\Stores\Created',
+            'App\Listeners\Images\Create@onCreateStore'
+        );
+
+        $events->listen(
+            'App\Events\Stores\Updated',
+            'App\Listeners\Images\Create@onUpdateStore'
         );
     }
 }
