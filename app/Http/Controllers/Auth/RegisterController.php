@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Users\Created;
 use App\Models\Users\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -71,11 +72,9 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'address' => $data['address'],
             'password' => bcrypt($data['password']),
-        ])->assignRole('user');
+        ]);
 
-        $image = $data['image']->store('avatars/users');
-
-        $user->image()->create(['path' => $image]);
+        event(new Created($user));
 
         return $user;
     }

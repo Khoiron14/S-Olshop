@@ -17,10 +17,6 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Items\Categories\Detach'
         ],
 
-        'App\Events\Stores\Created' => [
-            'App\Listeners\Roles\Assign',
-        ],
-
         'App\Events\Stores\Deleted' => [
             'App\Listeners\Roles\Remove',
             'App\Listeners\Items\Delete'
@@ -32,6 +28,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     protected $subscribe = [
+        'App\Listeners\Roles\Assign',
         'App\Listeners\Images\Delete',
         'App\Listeners\Images\Create',
         'App\Listeners\Items\Categories\Sync',
