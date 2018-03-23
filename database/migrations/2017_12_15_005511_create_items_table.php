@@ -22,12 +22,6 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('stock');
             $table->timestamps();
         });
-
-        Schema::create('category_item', function (Blueprint $table) {
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('item_id');
-            $table->primary(['category_id', 'item_id']);
-        });
     }
 
     /**
@@ -38,6 +32,5 @@ class CreateItemsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('items');
-        Schema::dropIfExists('category_item');
     }
 }
