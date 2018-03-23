@@ -15,6 +15,7 @@ class UsersSeeder extends Seeder
         $user = factory(User::class)->create([
             'name' => 'admin',
             'email' => 'admin@example.com',
+            'active' => true,
         ]);
         $user->assignRole('admin');
         $user->image()->create(['path' => 'seeds/user.png']);
@@ -22,6 +23,7 @@ class UsersSeeder extends Seeder
         $user = factory(User::class)->create([
             'name' => 'sellerUser',
             'email' => 'sellerUser@example.com',
+            'active' => true,
         ]);
         $user->assignRole('user', 'seller');
         $user->image()->create(['path' => 'seeds/user.png']);
@@ -29,6 +31,7 @@ class UsersSeeder extends Seeder
         $user = factory(User::class)->create([
             'name' => 'user',
             'email' => 'user@example.com',
+            'active' => true,
         ]);
         $user->assignRole('user');
         $user->image()->create(['path' => 'seeds/user.png']);
