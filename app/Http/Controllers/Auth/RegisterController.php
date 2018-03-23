@@ -78,4 +78,20 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered($user)
+    {
+        $this->guard()->logout();
+
+        alert()->success('Please check your email to activate your account.', 'Registered!')->persistent("Ok");
+
+        return redirect()->route('login');
+    }
 }
