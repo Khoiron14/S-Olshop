@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         'App\Events\Items\Purchased' => [
-            'App\Listeners\Users\Carts\Delete'
+            'App\Listeners\Carts\Delete'
         ],
     ];
 
