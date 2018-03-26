@@ -96,7 +96,7 @@ class RegisterController extends Controller
 
         $this->guard()->logout();
 
-        alert()->success('Please check your email to activate your account.', 'Registered!')->persistent("Ok");
+        alert()->success('Please check your email to activate your account.', 'Registered!')->persistent('Ok');
 
         return redirect()->route('login');
     }
