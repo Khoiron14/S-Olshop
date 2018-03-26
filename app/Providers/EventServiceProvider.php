@@ -13,6 +13,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'App\Events\Users\ActivationEmail' => [
+            'App\Listeners\Emails\SendActivation'
+        ],
+
         'App\Events\Items\Deleted' => [
             'App\Listeners\Items\Categories\Detach'
         ],
