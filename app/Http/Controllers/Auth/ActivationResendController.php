@@ -28,9 +28,9 @@ class ActivationResendController extends Controller
 
         return redirect()->route('login');
     }
-    
+
     /**
-     * Validate the user login request.
+     * Validate the resend request.
      *
      * @return void
      */
