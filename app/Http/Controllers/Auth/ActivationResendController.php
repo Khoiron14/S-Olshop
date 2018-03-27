@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Events\Users\ActivationEmail;
 use App\Models\Users\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 
