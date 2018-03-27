@@ -32,6 +32,11 @@ class Item extends Model
         return asset('images/' . $this->images()->first()->path);
     }
 
+    public function isEnough($quantity) : bool
+    {
+        return $this->stock >= $quantity;
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);

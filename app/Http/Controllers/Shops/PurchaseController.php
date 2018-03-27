@@ -23,7 +23,7 @@ class PurchaseController extends Controller
             return redirect()->back();
         }
 
-        if ($item->stock < $request->quantity) {
+        if (!$item->isEnough($request->quantity)) {
             alert()->warning('not enough stock');
 
             return redirect()->back();
