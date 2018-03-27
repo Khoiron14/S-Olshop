@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Users\Carts;
+namespace App\Listeners\Carts;
 
 use App\Events\Items\Purchased;
 use Illuminate\Queue\InteractsWithQueue;

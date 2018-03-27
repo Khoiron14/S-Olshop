@@ -19,6 +19,10 @@ Auth::routes();
 Route::get('/admin', 'Auth\AdminController@index')->name('admin.index');
 
 Route::prefix('user')->group(function() {
+    Route::get('/activate', 'Auth\ActivationController@activate')->name('user.activate');
+    Route::get('/activate/resend', 'Auth\ActivationResendController@showResendForm')->name('user.activate.resend');
+    Route::post('/activate/resend', 'Auth\ActivationResendController@resend');
+
     Route::get('/profile', 'Auth\ProfileController@show')->name('user.profile');
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 

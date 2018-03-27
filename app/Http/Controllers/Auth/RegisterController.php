@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Events\Users\Created;
+use App\Events\Users\ActivationEmail;
 use App\Models\Users\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -72,10 +74,30 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'address' => $data['address'],
             'password' => bcrypt($data['password']),
+            'activation_token' => str_random(255),
         ]);
 
         event(new Created($user));
 
         return $user;
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        // Sending mail
+        event(new ActivationEmail($user));
+
+        $this->guard()->logout();
+
+        alert()->success('Please check your email to activate your account.', 'Registered!')->persistent('Ok');
+
+        return redirect()->route('login');
     }
 }

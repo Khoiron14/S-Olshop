@@ -8,6 +8,7 @@ use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -24,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'avatar', 'password',
+        'name', 'email', 'phone', 'address', 'avatar', 'password', 'active', 'activation_token'
     ];
 
     /**
@@ -63,5 +64,10 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function scopeByActivationColumns(Builder $builder, $email, $token)
+    {
+        return $builder->whereEmail($email)->whereActivation_token($token);
     }
 }
