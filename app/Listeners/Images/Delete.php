@@ -33,8 +33,10 @@ class Delete
      */
     public function onUpdateUser(UpdateUser $event)
     {
-        if ($this->images) {
-            Storage::delete($event->user->image()->first()->path);
+        $image = $event->user->image()->first();
+
+        if ($this->images && !$image->isDefault()) {
+            Storage::delete($image->path);
         }
     }
 
@@ -46,8 +48,10 @@ class Delete
      */
     public function onUpdateStore(UpdateStore $event)
     {
-        if ($this->images) {
-            Storage::delete($event->store->image()->first()->path);
+        $image = $event->store->image()->first();
+
+        if ($this->images && !$image->isDefault()) {
+            Storage::delete($image->path);
         }
     }
 
@@ -59,7 +63,12 @@ class Delete
      */
     public function onDeleteStore(DeleteStore $event)
     {
-        Storage::delete($event->store->image()->first()->path);
+        $image = $event->store->image()->first();
+
+        if ($this->images && !$image->isDefault()) {
+            Storage::delete($event->store->image()->first()->path);
+        }
+
         $event->store->image()->delete();
     }
 
