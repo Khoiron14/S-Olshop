@@ -4,6 +4,7 @@ namespace App\Models\Users;
 
 use App\Models\Image;
 use App\Models\Users\Cart;
+use App\Models\Users\Address;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
@@ -46,6 +47,11 @@ class User extends Authenticatable
         return asset('images/' . $this->image()->first()->path);
     }
 
+    public function isNameDefault() : bool
+    {
+        return str_before($this->email, '@') == $this->name;
+    }
+
     public function image()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -64,6 +70,11 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 
     public function scopeByActivationColumns(Builder $builder, $email, $token)
