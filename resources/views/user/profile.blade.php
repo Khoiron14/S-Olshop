@@ -8,9 +8,9 @@
 
                 <div class="card-header bg-primary text-white mb-3">
                     <h3 class="d-inline">Profile</h3>
-
+                    
                     <div class="float-right">
-                        @if (Auth::user()->hasRole('user'))
+                        @if (auth()->user()->hasRole('user'))
                             <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editProfile">Edit</button>
 
                             {{-- modal form edit profile --}}
@@ -34,10 +34,14 @@
                                                         type="text"
                                                         class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                         name="name"
-                                                        value="{{ Auth::user()->name }}"
+                                                        value="{{ auth()->user()->name }}"
                                                         placeholder="input your name."
                                                         required
+                                                        {{ auth()->user()->isNameDefault() ? '' : 'disabled' }}
                                                     >
+                                                    <small class="form-text text-muted">
+                                                        Only one change, please check again!
+                                                    </small>
                                                     @if ($errors->has('name'))
                                                         <div class="invalid-feedback">
                                                             <strong>{{ $errors->first('name') }}</strong>
@@ -51,7 +55,7 @@
                                                         type="email"
                                                         class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                         name="email"
-                                                        value="{{ Auth::user()->email }}"
+                                                        value="{{ auth()->user()->email }}"
                                                         placeholder="input your email."
                                                         required
                                                     >
@@ -68,7 +72,7 @@
                                                         type="text"
                                                         class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
                                                         name="phone"
-                                                        value="{{ Auth::user()->phone }}"
+                                                        value="{{ auth()->user()->phone }}"
                                                         placeholder="input your phone number."
                                                         required
                                                     >
@@ -85,7 +89,7 @@
                                                         type="text"
                                                         class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
                                                         name="address"
-                                                        value="{{ Auth::user()->address }}"
+                                                        value="{{ auth()->user()->address }}"
                                                         placeholder="input your address."
                                                         required
                                                     >
@@ -124,7 +128,7 @@
 
                 <div class="card-body">
                     <img class="rounded" src="{{ auth()->user()->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
-                    <h4 class="d-inline" style="margin-left: 8px">{{ Auth::user()->name }}</h4>
+                    <h4 class="d-inline" style="margin-left: 8px">{{ auth()->user()->name }}</h4>
 
                     <hr>
 
@@ -132,21 +136,21 @@
                         <tbody>
                             <tr>
                                 <th scope="row"> Email :</th>
-                                <td>{{ Auth::user()->email }}</td>
+                                <td>{{ auth()->user()->email }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">No. Telepon :</th>
-                                <td>{{ Auth::user()->phone }}</td>
+                                <td>{{ auth()->user()->phone }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Alamat :</th>
-                                <td>{{ Auth::user()->address }}</td>
+                                <td>{{ auth()->user()->address }}</td>
                             </tr>
-                            @if (Auth::user()->hasRole('seller'))
+                            @if (auth()->user()->hasRole('seller'))
                                 <tr>
                                     <th scope="row">Toko :</th>
                                     <td>
-                                        <a href="{{ route('store.show', Auth::user()->store) }}">{{ Auth::user()->store->name }}</a>
+                                        <a href="{{ route('store.show', auth()->user()->store) }}">{{ auth()->user()->store->name }}</a>
 
                                         {{-- edit store --}}
                                         <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editStore">Edit</button>
@@ -163,7 +167,7 @@
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <form role="form" method="POST" class="text-dark" action="{{ route('store.update', Auth::user()->store) }}" enctype="multipart/form-data">
+                                                        <form role="form" method="POST" class="text-dark" action="{{ route('store.update', auth()->user()->store) }}" enctype="multipart/form-data">
                                                             {!! csrf_field() !!}
                                                             {{ method_field('PATCH') }}
                                                             <div class="form-group">
@@ -172,7 +176,7 @@
                                                                     type="text"
                                                                     class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                                     name="name"
-                                                                    value="{{ Auth::user()->store->name }}"
+                                                                    value="{{ auth()->user()->store->name }}"
                                                                     placeholder="input store name."
                                                                     required
                                                                 >
@@ -226,7 +230,7 @@
                             @endif
                         </tbody>
                     </table>
-                    @if (Auth::user()->hasRole('user') && !(Auth::user()->hasRole('seller')))
+                    @if (auth()->user()->hasRole('user') && !(auth()->user()->hasRole('seller')))
                         <p class="text-center">Ingin menjual sesuatu? <a href="{{ route('store.create') }}">Daftar sekarang!</a></p>
                     @endif
                 </div>
