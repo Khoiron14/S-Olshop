@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Image;
 use App\Models\Shops\Items\Item;
 use App\Models\Shops\Items\Category;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,6 @@ class ItemsAndCategoriesSeeder extends Seeder
         ]);
 
         $item->categories()->attach([$category1, $category5]);
-        $item->images()->create(['path' => 'seeds/item.png']);
+        $item->images()->create(['path' => Image::ITEM_DEFAULT]);
     }
 }
