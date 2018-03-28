@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'description' => 'required|string|max:500',
+            'description' => 'string|max:500',
             'image' => 'image|mimes:jpeg,bmp,png'
         ];
 

@@ -18,7 +18,7 @@ class CreateStoresTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('domain');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

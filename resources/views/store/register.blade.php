@@ -50,25 +50,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Description</label>
-
-                            <div class="col-lg-6">
-                                <textarea
-                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                        name="description"
-                                        value="{{ old('description') }}"
-                                        rows="3"
-                                        required
-                                ></textarea>
-                                @if ($errors->has('description'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <div class="col-lg-6 offset-lg-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register
