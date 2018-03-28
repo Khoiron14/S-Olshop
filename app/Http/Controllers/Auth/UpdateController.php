@@ -13,6 +13,11 @@ class UpdateController extends Controller
         $this->middleware('auth');
     }
 
+    public function show()
+    {
+        return view('auth.update');
+    }
+
     public function update(UserRequest $request)
     {
         if (auth()->user()->isNameDefault()) {
