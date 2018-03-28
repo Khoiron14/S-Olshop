@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'email' => 'required|string|email|max:25|unique:users,email,' . auth()->user()->id,
             'phone' => 'required|string|max:25|unique:users,phone,' . auth()->user()->id,
             'address' => 'required|string|max:100',
-            'image' => 'required|image|mimes:jpeg,bmp,png',
+            'image' => 'image|mimes:jpeg,bmp,png',
         ];
     }
 }
