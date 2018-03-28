@@ -15,7 +15,7 @@ class UpdateController extends Controller
 
     public function show()
     {
-        return view('auth.update');
+        return view('auth.edit');
     }
 
     public function update(UserRequest $request)
