@@ -18,8 +18,7 @@
                                 name="name"
                                 value="{{ auth()->user()->name }}"
                                 placeholder="input your name."
-                                required
-                                {{ auth()->user()->isNameDefault() ? '' : 'disabled' }}
+                                {{ auth()->user()->isNameDefault() ? 'required' : 'disabled' }}
                             >
                             <small class="form-text text-muted">
                                 Only one change, please check again!
