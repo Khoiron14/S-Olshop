@@ -11,26 +11,6 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Name</label>
-
-                            <div class="col-lg-6">
-                                <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                        name="name"
-                                        value="{{ old('name') }}"
-                                        autofocus
-                                        required
-                                >
-                                @if ($errors->has('name'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-right">E-Mail</label>
 
                             <div class="col-lg-6">
