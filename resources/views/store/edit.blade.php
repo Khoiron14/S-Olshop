@@ -19,16 +19,23 @@
                             <label>Name :</label>
                             <input
                                 type="text"
-                                class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                class="form-control"
                                 name="name"
                                 value="{{ $store->name }}"
                                 placeholder="input store name."
-                                required="required">
-                            @if ($errors->has('name'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </div>
-                            @endif
+                                disabled="disabled">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Domain :</label>
+                            <span>{{ request()->root() }}/</span>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                value="{{ $store->domain }}"
+                                placeholder="input store domain."
+                                disabled="disabled">
                         </div>
 
                         <div class="form-group">
