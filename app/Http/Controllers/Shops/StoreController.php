@@ -17,6 +17,7 @@ class StoreController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('store.owner')->only('edit');
     }
 
     /**
@@ -67,6 +68,17 @@ class StoreController extends Controller
         $categories = Category::all();
 
         return view('store.index', compact('store', 'items', 'categories'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Store $store)
+    {
+        return view('store.edit', compact('store'));
     }
 
     /**

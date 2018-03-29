@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.app') @section('content')
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-10 offset-1">
@@ -8,14 +6,20 @@
 
                 <div class="card-header bg-primary text-white mb-3">
                     <h3 class="d-inline">Profile</h3>
-                    
+
                     <div class="float-right">
-                        <a href="{{ route('user.update') }}" class="btn btn-sm btn-light">Edit</a>
+                        <a href="{{ route('user.edit') }}" class="btn btn-sm btn-light">Edit</a>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <img class="rounded" src="{{ auth()->user()->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img
+                        class="rounded"
+                        src="{{ auth()->user()->getImage() }}"
+                        alt="avatar"
+                        height="64px"
+                        width="64px"
+                        style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ auth()->user()->name }}</h4>
 
                     <hr>
@@ -23,7 +27,8 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="row"> Email :</th>
+                                <th scope="row">
+                                    Email :</th>
                                 <td>{{ auth()->user()->email }}</td>
                             </tr>
                             <tr>
@@ -35,91 +40,20 @@
                                 <td>{{ auth()->user()->address }}</td>
                             </tr>
                             @if (auth()->user()->hasRole('seller'))
-                                <tr>
-                                    <th scope="row">Toko :</th>
-                                    <td>
-                                        <a href="{{ route('store.show', auth()->user()->store) }}">{{ auth()->user()->store->name }}</a>
-
-                                        {{-- edit store --}}
-                                        <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editStore">Edit</button>
-
-                                        {{-- modal form for edit store --}}
-                                        <div class="modal fade" id="editStore" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-primary">
-                                                        <h5 class="modal-title text-white">Store Edit</h5>
-                                                        <button type="button" class="close" style="color: white" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="modal-body">
-                                                        <form role="form" method="POST" class="text-dark" action="{{ route('store.update', auth()->user()->store) }}" enctype="multipart/form-data">
-                                                            {!! csrf_field() !!}
-                                                            {{ method_field('PATCH') }}
-                                                            <div class="form-group">
-                                                                <label>Name :</label>
-                                                                <input
-                                                                    type="text"
-                                                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                                                    name="name"
-                                                                    value="{{ auth()->user()->store->name }}"
-                                                                    placeholder="input store name."
-                                                                    required
-                                                                >
-                                                                @if ($errors->has('name'))
-                                                                    <div class="invalid-feedback">
-                                                                        <strong>{{ $errors->first('name') }}</strong>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Avatar :</label><br>
-                                                                <img class="rounded" src="{{ auth()->user()->store->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
-                                                                <input type="file" class="form-control-file d-inline" name="image">
-                                                                @if ($errors->has('image'))
-                                                                    <ul>
-                                                                        @foreach ($errors->get('image') as $error)
-                                                                            <strong class="text-danger"><li>{{ $error }}</li></strong>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                @endif
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Description :</label>
-                                                                <textarea
-                                                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                                                        name="description"
-                                                                        rows="3"
-                                                                        placeholder="input description."
-                                                                        required
-                                                                >{{ auth()->user()->store->description }}</textarea>
-                                                                @if ($errors->has('description'))
-                                                                    <div class="invalid-feedback">
-                                                                        <strong>{{ $errors->first('description') }}</strong>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
-
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Edit</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <th scope="row">Toko :</th>
+                                <td>
+                                    <a href="{{ route('store.show', auth()->user()->store) }}">{{ auth()->user()->store->name }}</a>
+                                    <a href="{{ route('store.edit', auth()->user()->store) }}" class="btn btn-sm btn-light">Edit</a>
+                                </td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
                     @if (auth()->user()->hasRole('user') && !(auth()->user()->hasRole('seller')))
-                        <p class="text-center">Ingin menjual sesuatu? <a href="{{ route('store.create') }}">Daftar sekarang!</a></p>
+                    <p class="text-center">Ingin menjual sesuatu?
+                        <a href="{{ route('store.create') }}">Daftar sekarang!</a>
+                    </p>
                     @endif
                 </div>
             </div>
