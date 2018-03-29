@@ -89,6 +89,7 @@
                                 src="{{ auth()->user()->getImage() }}"
                                 alt="avatar"
                                 height="64"
+                                width="64"
                                 style="object-fit: cover; background-color: #ddd">
                             <input type="file" class="ml-2" name="image">
                             @if ($errors->has('image'))
