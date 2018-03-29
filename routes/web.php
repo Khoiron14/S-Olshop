@@ -24,8 +24,8 @@ Route::prefix('user')->group(function() {
     Route::post('/activate/resend', 'Auth\ActivationResendController@resend');
 
     Route::get('/profile', 'Users\ProfileController@show')->name('user.profile');
-    Route::get('/profile/edit', 'Auth\UpdateController@show')->name('user.update');
-    Route::patch('/profile/edit', 'Auth\UpdateController@update');
+    Route::get('/profile/edit', 'Auth\UpdateController@show')->name('user.edit');
+    Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 
     Route::get('/purchase', 'Shops\PurchaseController@show')->name('user.purchase');
 
@@ -40,6 +40,7 @@ Route::resource('store', 'Shops\StoreController', ['except' => [
 
 Route::prefix('{store}')->group(function() {
     Route::get('/', 'Shops\StoreController@show')->name('store.show');
+    Route::get('/edit', 'Shops\StoreController@edit')->name('store.edit');
     Route::get('/purchase', 'Shops\StoreController@showPurchase')->name('store.purchase');
 
     Route::resource('item', 'Shops\ItemController', ['except' => [
