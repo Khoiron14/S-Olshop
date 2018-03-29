@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Store;
 
 use Closure;
 
-class CheckStoreOwner
+class Owner
 {
     /**
      * Handle an incoming request.
