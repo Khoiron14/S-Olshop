@@ -23,7 +23,7 @@ Route::prefix('user')->group(function() {
     Route::get('/activate/resend', 'Auth\ActivationResendController@showResendForm')->name('user.activate.resend');
     Route::post('/activate/resend', 'Auth\ActivationResendController@resend');
 
-    Route::get('/profile', 'Auth\ProfileController@show')->name('user.profile');
+    Route::get('/profile', 'Users\ProfileController@show')->name('user.profile');
     Route::get('/profile/edit', 'Auth\UpdateController@show')->name('user.update');
     Route::patch('/profile/edit', 'Auth\UpdateController@update');
 
