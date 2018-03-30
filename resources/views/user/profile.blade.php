@@ -51,8 +51,8 @@
                         </tbody>
                     </table>
                     @if (auth()->user()->hasRole('user') && !(auth()->user()->hasRole('seller')))
-                    <p class="text-center">Ingin menjual sesuatu?
-                        <a href="{{ route('store.create') }}">Daftar sekarang!</a>
+                    <p class="text-center">Want to sell something?
+                        <a href="{{ route('store.create') }}">Sign up now!</a>
                     </p>
                     @endif
                 </div>
