@@ -14,7 +14,9 @@ class Image extends Model
 
     public function isDefault() : bool
     {
-        return $this->path == self::USER_DEFAULT || self::ITEM_DEFAULT || self::STORE_DEFAULT;
+        return $this->path == self::USER_DEFAULT ?: 
+               $this->path == self::ITEM_DEFAULT ?: 
+               $this->path == self::STORE_DEFAULT;
     }
 
     public function imageable()
