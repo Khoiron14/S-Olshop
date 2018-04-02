@@ -26,8 +26,6 @@ class UserRequest extends FormRequest
         return [
             'name' => 'string|max:25|unique:users,name,' . auth()->user()->id,
             'email' => 'required|string|email|max:25|unique:users,email,' . auth()->user()->id,
-            'phone' => 'required|string|max:25|unique:users,phone,' . auth()->user()->id,
-            'address' => 'required|string|max:100',
             'image' => 'image|mimes:jpeg,bmp,png',
         ];
     }
