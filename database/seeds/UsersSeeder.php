@@ -2,6 +2,7 @@
 
 use App\Models\Image;
 use App\Models\Users\User;
+use App\Models\Users\Address;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -28,6 +29,9 @@ class UsersSeeder extends Seeder
         ]);
         $user->assignRole('user', 'seller');
         $user->image()->create(['path' => $image]);
+        factory(Address::class, 3)->create([
+            'user_id' => $user->id
+        ]);
 
         $user = factory(User::class)->create([
             'name' => 'user',
@@ -35,5 +39,8 @@ class UsersSeeder extends Seeder
         ]);
         $user->assignRole('user');
         $user->image()->create(['path' => $image]);
+        factory(Address::class, 3)->create([
+            'user_id' => $user->id
+        ]);
     }
 }
