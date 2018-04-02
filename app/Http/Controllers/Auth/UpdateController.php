@@ -29,8 +29,6 @@ class UpdateController extends Controller
         auth()->user()->update([
             'name' => $name,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
         ]);
 
         event(new Updated(auth()->user()));
