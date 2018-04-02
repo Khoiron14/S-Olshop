@@ -27,6 +27,10 @@ Route::prefix('user')->group(function() {
     Route::get('/profile/edit', 'Auth\UpdateController@show')->name('user.edit');
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
 
+    Route::resource('address', 'Users\AddressController', ['except' => [
+        'show', 'create', 'edit'
+    ]]);
+
     Route::get('/purchase', 'Shops\PurchaseController@show')->name('user.purchase');
 
     Route::get('/cart', 'Users\CartController@index')->name('cart.index');
