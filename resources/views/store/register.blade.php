@@ -8,11 +8,10 @@
                 </div>
                 <div class="card-body">
                     <form
-                        role="form"
                         method="POST"
                         action="{{ route('store.store') }}"
                         enctype="multipart/form-data">
-                        {!! csrf_field() !!}
+                        {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-right">Name</label>
                             <div class="col-lg-6">
