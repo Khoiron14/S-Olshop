@@ -51,7 +51,13 @@ Route::prefix('{store}')->group(function() {
         'index', 'show', 'create', 'edit'
     ]]);
 
-    Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
+    Route::prefix('{item}')->group(function() {
+        Route::get('/', 'Shops\ItemController@show')->name('item.show');
+
+        Route::resource('comment', 'Users\CommentController', ['except' => [
+            'index', 'show', 'create', 'edit'
+        ]]);
+    });
 });
 
 Route::post('/purchase/{item}', 'Shops\PurchaseController@store')->name('purchase.store');
