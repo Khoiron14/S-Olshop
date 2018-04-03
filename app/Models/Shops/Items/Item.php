@@ -33,6 +33,16 @@ class Item extends Model
         return asset('images/' . $this->images()->first()->path);
     }
 
+    public function isSellBy($user) : bool
+    {
+        return $this->store->user == $user;
+    }
+
+    public function isPurchaseBy($user) : bool
+    {
+        return $user->purchases->find($this) != null;
+    }
+
     public function isEnough($quantity) : bool
     {
         return $this->stock >= $quantity;
