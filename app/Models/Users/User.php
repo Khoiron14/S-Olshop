@@ -5,6 +5,7 @@ namespace App\Models\Users;
 use App\Models\Image;
 use App\Models\Users\Cart;
 use App\Models\Users\Address;
+use App\Models\Users\Comment;
 use App\Models\Shops\Store;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
@@ -52,6 +53,11 @@ class User extends Authenticatable
         return str_before($this->email, '@') == $this->name;
     }
 
+    public function scopeByActivationColumns(Builder $builder, $email, $token)
+    {
+        return $builder->whereEmail($email)->whereActivation_token($token);
+    }
+
     public function image()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -77,8 +83,8 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
-    public function scopeByActivationColumns(Builder $builder, $email, $token)
+    public function comments()
     {
-        return $builder->whereEmail($email)->whereActivation_token($token);
+        return $this->hasMany(Comment::class);
     }
 }

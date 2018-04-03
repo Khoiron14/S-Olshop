@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Users\User;
 use App\Models\Users\Cart;
 use App\Models\Shops\Store;
+use App\Models\Users\Comment;
 use App\Models\Process\Purchase;
 use App\Models\Shops\Items\Category;
 use Illuminate\Database\Eloquent\Model;
@@ -60,5 +61,10 @@ class Item extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
