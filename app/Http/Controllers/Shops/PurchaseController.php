@@ -53,7 +53,7 @@ class PurchaseController extends Controller
             return redirect()->back();
         }
 
-        $purchase->update(['status_id' => $status]);
+        $purchase->update(['status_id' => Status::SELLER_CONFIRM]);
 
         return redirect()->back();
     }
