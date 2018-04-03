@@ -4,11 +4,13 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-10 offset-1">
+
+            {{-- Item --}}
             <div class="card">
-                <div class="card-header bg-primary text-white mb-3">
+                <div class="card-header bg-primary text-white">
                     {{-- image & name --}}
-                    <img class="rounded" src="{{ $item->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
-                    <h4 class="d-inline" style="margin-left: 8px">{{ $item->name }}</h4>
+                    <img class="rounded" src="{{ asset( $item->getImage()) }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <h4 class="d-inline ml-2">{{ $item->name }}</h4>
 
                     {{-- option button --}}
                     <div class="float-right">
@@ -28,7 +30,7 @@
 
                                         <div class="modal-body">
                                             <form role="form" method="POST" class="text-dark" action="{{ route('item.update', [$item->store, $item]) }}" enctype="multipart/form-data">
-                                                {!! csrf_field() !!}
+                                                {{ csrf_field() }}
                                                 {{ method_field('PATCH') }}
                                                 <div class="form-group">
                                                     <label>Item Name :</label>
@@ -54,7 +56,7 @@
                                                             <label class="form-check-label">
                                                                 <input
                                                                     class="form-check-input"
-                                                                    name="categoryId[]"
+                                                                    name="categoriesId[]"
                                                                     type="checkbox"
                                                                     value="{{ $category->id }}"
                                                                     @foreach ($item->categories as $itemCategory)
@@ -109,8 +111,17 @@
 
                                                 <div class="form-group">
                                                     <label>Image :</label><br>
-                                                    <img class="rounded" src="{{ auth()->user()->getAvatar() }}" alt="avatar" height="64" style="object-fit: cover; background-color: #ddd">
-                                                    <input type="file" class="form-control-file d-inline" name="image">
+                                                    @foreach ($item->images()->get() as $image)
+                                                        <img class="rounded" src="{{ asset('images/' . $image->path) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
+                                                    @endforeach
+                                                    <input type="file" class="ml-2" name="images[]" multiple>
+                                                    @if ($errors->has('images.*'))
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -127,14 +138,14 @@
                             <form action="{{ route('item.destroy', [$item->store, $item]) }}" class="d-inline" method="post">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" name="delete">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger" name="delete">Delete</button>
                             </form>
 
                         @else
                             {{-- add to cart for other user --}}
                             <form action="{{ route('cart.store', $item) }}" method="post">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-sm btn-light" name="cart"><i class="fa fa-cart-plus fa-lg" aria-hidden="true"></i> Cart</button>
+                                <button type="submit" class="btn btn-sm btn-light" name="cart"><i class="ion-ios-cart ion-sm"></i> Cart</button>
                             </form>
                         @endif
                     </div>
@@ -143,10 +154,6 @@
                 <div class="card-body">
                     <table class="table">
                         <tbody>
-                            <tr>
-                                <th scope="row">Id :</th>
-                                <td>{{ $item->id }}</td>
-                            </tr>
                             <tr>
                                 <th scope="row">Category :</th>
                                 <td>
@@ -167,9 +174,46 @@
                                 <th scope="row">Sold by :</th>
                                 <td><a href="{{ route('store.show', $item->store) }}">{{ $item->store->name }}</td>
                             </tr>
+                            <tr>
+                                <th scope="row">Images :</th>
+                                <td>
+                                    @foreach ($item->images()->get() as $image)
+                                        <img src="{{ asset('images/' . $image->path) }}" alt="image" height="100" style="object-fit: cover; background-color: #ddd">
+                                    @endforeach
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            {{-- Create Comment --}}
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">Write Comment</div>
+                <div class="card-body">
+                    <form class="form-horizontal" action="{{ route('comment.store', [$item->store, $item]) }}" method="post">
+                        {{ csrf_field() }}
+                        <textarea name="message" class="form-control" rows="5" cols="30" placeholder="Your comment ..." style="resize: none;"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+
+                {{-- Show Comments --}}
+                @foreach ($item->comments()->get() as $comment)
+                    <div class="card-body bg-light">
+                        <img class="rounded" src="{{ asset( $comment->user->getImage()) }}" alt="avatar" height="40px" width="40px" style="object-fit: cover; background-color: #ddd">
+                        <h5 class="d-inline ml-2"><b>{{ $comment->user->name }}</b></h5>
+                        @if ($item->isSellBy($comment->user))
+                            <span class="badge badge-primary">Seller</span>
+                        @elseif ($item->isPurchaseBy($comment->user))
+                            <span class="badge badge-success">Purchaser</span>
+                        @endif
+                        <p><small>{{ $comment->created_at->diffForHumans() }}</small></p>
+                        <p>{{ $comment->message }}</p>
+                        <hr>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

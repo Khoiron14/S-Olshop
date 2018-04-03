@@ -1,29 +1,31 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.app') @section('content')
 <div class="container">
     <div class="row justify-content-md-center mt-5">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register Store</div>
+                <div class="card-header bg-primary text-white">
+                    <h3>Store Register</h3>
+                </div>
                 <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('store.store') }}" enctype="multipart/form-data">
-                        {!! csrf_field() !!}
+                    <form
+                        method="POST"
+                        action="{{ route('store.store') }}"
+                        enctype="multipart/form-data">
+                        {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-right">Name</label>
                             <div class="col-lg-6">
                                 <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                        name="name"
-                                        value="{{ old('name') }}"
-                                        autofocus
-                                        required
-                                >
+                                    type="text"
+                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                    name="name"
+                                    value="{{ old('name') }}"
+                                    autofocus="autofocus"
+                                    required="required">
                                 @if ($errors->has('name'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </div>
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -32,46 +34,18 @@
                             <label class="col-lg-4 col-form-label text-lg-right">Domain</label>
 
                             <div class="col-lg-6">
-                                <span>{{ substr(request()->url(), 7, -14) }}</span>
+                                <span>{{ request()->root() }}/</span>
                                 <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('domain') ? ' is-invalid' : '' }}"
-                                        name="domain"
-                                        value="{{ old('domain') }}"
-                                        autofocus
-                                        required
-                                >
+                                    type="text"
+                                    class="form-control{{ $errors->has('domain') ? ' is-invalid' : '' }}"
+                                    name="domain"
+                                    value="{{ old('domain') }}"
+                                    autofocus="autofocus"
+                                    required="required">
                                 @if ($errors->has('domain'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('domain') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Avatar</label>
-
-                            <div class="col-lg-6">
-                                <input type="file" class="form-control-file" name="avatar" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Description</label>
-
-                            <div class="col-lg-6">
-                                <textarea
-                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                        name="description"
-                                        value="{{ old('description') }}"
-                                        rows="3"
-                                        required
-                                ></textarea>
-                                @if ($errors->has('description'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </div>
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('domain') }}</strong>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -84,6 +58,12 @@
                             </div>
                         </div>
                     </form>
+                    <small>
+                        <ul>
+                            <li>Can't change, please check again!</li>
+                            <li>You can edit avatar and description in store edit page after registered.</li>
+                        </ul>
+                    </small>
                 </div>
             </div>
         </div>

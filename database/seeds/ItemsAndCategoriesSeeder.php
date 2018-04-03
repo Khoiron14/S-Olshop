@@ -1,7 +1,8 @@
 <?php
 
-use App\Item\Item;
-use App\Item\Category;
+use App\Models\Image;
+use App\Models\Shops\Items\Item;
+use App\Models\Shops\Items\Category;
 use Illuminate\Database\Seeder;
 
 class ItemsAndCategoriesSeeder extends Seeder
@@ -22,8 +23,10 @@ class ItemsAndCategoriesSeeder extends Seeder
         $item = factory(Item::class)->create([
             'store_id' => 1,
             'name' => 'Lorem Ipsum',
+            'slug' => str_slug('Lorem Ipsum'),
         ]);
 
         $item->categories()->attach([$category1, $category5]);
+        $item->images()->create(['path' => Image::ITEM_DEFAULT]);
     }
 }

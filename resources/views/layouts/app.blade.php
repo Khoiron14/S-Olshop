@@ -12,10 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" style="box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15)">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -33,25 +36,24 @@
                     @else
                         <li class="nav-item">
                             <a href="{{ route('cart.index') }}" class="nav-link">
-                                <i class="fa fa-shopping-cart fa-lg fa-border" aria-hidden="true"></i> Cart
+                                <i class="ion-ios-cart ion-2x"></i> Cart
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                               <i class="fa fa-user fa-lg fa-border" aria-hidden="true"></i> {{ Auth::user()->name }}
+                               <i class="ion-ios-contact ion-2x"></i> {{ auth()->user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                @if (Auth::user()->hasRole('admin'))
-                                    <a href="{{ route('admin.index') }}" class="dropdown-item">Admin Page</a>
-                                @elseif (Auth::user()->hasRole('seller', 'user'))
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
+                                <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
 
-                                    <a href="{{ route('store.show', Auth::user()->store) }}" class="dropdown-item">Store Page</a>
-                                @else
-                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
+                                @if (auth()->user()->hasRole('admin'))
+                                    <a href="{{ route('admin.index') }}" class="dropdown-item">Admin Page</a>
+                                @elseif (auth()->user()->hasRole('seller'))
+                                    <a href="{{ route('store.show', auth()->user()->store) }}" class="dropdown-item">Store Page</a>
                                 @endif
+                                <a href="{{ route('user.purchase') }}" class="dropdown-item">Purchase</a>
 
                                 <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout
@@ -68,11 +70,18 @@
         </div>
     </nav>
 
-    @include('layouts.partials._alerts')
     @yield('content')
+
+    <footer class="mt-5 bg-secondary" style="box-shadow: 0 1px 2px 3px rgba(0, 0, 0, 0.30)">
+        <div class="text-right mr-5 pt-1 pb-1">
+            <p class="mb-3 mt-3 text-white">Vheriv3 </a> 2017. <i class="ion-ios-paper-plane ion-sm text-warning"></i> with <i class="ion-md-heart ion-sm text-danger"></i> in Surabaya</p>
+        </div>
+    </footer>
 </div>
 
 <!-- Scripts -->
+@include('sweet::alert')
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/others.js') }}"></script>
 </body>
 </html>

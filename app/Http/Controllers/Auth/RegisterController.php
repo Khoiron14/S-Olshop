@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Events\Users\Created;
+use App\Events\Users\ActivationEmail;
+use App\Models\Users\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -48,12 +51,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|string|max:255|unique:users|email',
-            'phone'     => 'required|string|max:255|unique:users',
-            'address'   => 'required|string|max:255',
-            'avatar'    => 'required',
-            'password'  => 'required|string|min:6|confirmed',
+            'email' => 'required|string|max:25|unique:users|email',
+            'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -65,13 +64,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'phone'     => $data['phone'],
-            'address'   => $data['address'],
-            'avatar'    => $data['avatar']->store('avatars/users'),
-            'password'  => bcrypt($data['password']),
-        ])->assignRole('user');
+        $user = User::create([
+            'name' => str_before($data['email'], '@'),
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'activation_token' => str_random(255),
+        ]);
+
+        event(new Created($user));
+
+        return $user;
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        // Sending mail
+        event(new ActivationEmail($user));
+
+        $this->guard()->logout();
+
+        alert()->success('Please check your email to activate your account.', 'Registered!')->persistent('Ok');
+
+        return redirect()->route('login');
     }
 }

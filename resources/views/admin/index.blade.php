@@ -34,7 +34,7 @@
                                     <form action="{{ route('store.destroy', $store) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <button type="submit" class="btn btn-sm btn-danger" name="button">delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" name="delete">delete</button>
                                     </form>
                                 </td>
                             </tr>

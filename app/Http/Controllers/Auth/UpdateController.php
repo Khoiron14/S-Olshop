@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Storage;
-use Illuminate\Http\Request;
+use App\Events\Users\Updated;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
 class UpdateController extends Controller
@@ -13,25 +13,28 @@ class UpdateController extends Controller
         $this->middleware('auth');
     }
 
-    public function update(Request $request)
+    public function show()
     {
-        if ($request->file('avatar')) {
-            if ($request->user()->avatar) {
-                Storage::delete($request->user()->avatar);
-            }
+        return view('auth.edit');
+    }
 
-            $request->user()->update([
-                'avatar' => $request->file('avatar')->store('avatars/users'),
-            ]);
+    public function update(UserRequest $request)
+    {
+        if (auth()->user()->isNameDefault()) {
+            $name = $request->name;
+        } else {
+            $name = auth()->user()->name;
         }
 
         auth()->user()->update([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'phone'     => $request->phone,
-            'address'   => $request->address,
+            'name' => $name,
+            'email' => $request->email,
         ]);
 
-        return redirect()->route('user.profile')->withInfo('Profile has been updated!');
+        event(new Updated(auth()->user()));
+
+        alert()->success('Profile has been updated!');
+
+        return redirect()->route('user.profile');
     }
 }

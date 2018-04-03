@@ -1,6 +1,7 @@
 <?php
 
-use App\Store;
+use App\Models\Image;
+use App\Models\Shops\Store;
 use Illuminate\Database\Seeder;
 
 class StoreSeeder extends Seeder
@@ -16,8 +17,9 @@ class StoreSeeder extends Seeder
             'user_id' => 2,
             'name' => 'Maju jaya Abadi',
             'domain' => 'MJAstore',
-            'avatar' => 'seeds/store.png',
-            'description' => 'Bertarunglah dragon ball, dengan segala kemampuan yang ada. Bila kembali dari langit, semoga hidup kan jadi lebih baik',
+            'description' => 'lorem ipsum....',
+        ])->image()->create([
+            'path' => Image::STORE_DEFAULT
         ]);
     }
 }

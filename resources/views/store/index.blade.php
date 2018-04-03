@@ -8,13 +8,14 @@
                 <div class="card-header bg-primary text-white mb-3">
 
                     {{-- image & name --}}
-                    <img class="rounded" src="{{ $store->getAvatar() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
+                    <img class="rounded" src="{{ $store->getImage() }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
                     <h4 class="d-inline" style="margin-left: 8px">{{ $store->name }}</h4>
 
                     {{-- option button --}}
                     @if (Auth::user()->id == $store->user->id)
                         <div class="float-right">
                             <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#addItem">Add Item</button>
+                            <a href="{{ route('store.purchase', $store) }}" class="white btn btn-sm btn-warning">Purchase Request</a>
 
                             {{-- modal form for add item --}}
                             <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-hidden="true">
@@ -51,7 +52,7 @@
                                                     @foreach ($categories as $category)
                                                         <div class="form-check">
                                                             <label class="form-check-label">
-                                                                <input class="form-check-input" name="categoryId[]" type="checkbox" value="{{ $category->id }}">
+                                                                <input class="form-check-input" name="categoriesId[]" type="checkbox" value="{{ $category->id }}">
                                                                 {{ $category->name }}
                                                             </label>
                                                         </div>
@@ -98,7 +99,20 @@
 
                                                 <div class="form-group">
                                                     <label>Image :</label>
-                                                    <input type="file" class="form-control-file" name="image" required>
+                                                    <input
+                                                        type="file"
+                                                        class="form-control-file"
+                                                        name="images[]"
+                                                        multiple
+                                                        required
+                                                    >
+                                                    @if ($errors->has('images.*'))
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <strong class="text-danger"><li>{{ $error }}</li></strong>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -116,8 +130,9 @@
 
                 {{-- store description --}}
                 <div class="card-body">
-                    <label>Description :</label>
-                    <p>{{ $store->description }}</p>
+                    <p class="{{ $store->description ? '' : 'text-muted' }}">
+                        {{ $store->description ?: 'No description...' }}
+                    </p>
                 </div>
 
                 @if ($items->count() == null)

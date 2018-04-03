@@ -17,16 +17,10 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('store_id');
             $table->string('name');
-            $table->unsignedInteger('price');
+            $table->string('slug');
+            $table->double('price');
             $table->unsignedInteger('stock');
-            $table->string('image')->nullable()->default('seeds/noImage.png');
             $table->timestamps();
-        });
-
-        Schema::create('category_item', function (Blueprint $table) {
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('item_id');
-            $table->primary(['category_id', 'item_id']);
         });
     }
 
@@ -38,6 +32,5 @@ class CreateItemsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('items');
-        Schema::dropIfExists('category_item');
     }
 }

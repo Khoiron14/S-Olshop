@@ -13,7 +13,6 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">id</th>
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
@@ -23,7 +22,6 @@
                         <tbody>
                             @foreach ($carts as $cart)
                                 <tr>
-                                    <th scope="row">{{ $cart->item->id }}</th>
                                     <td>
                                         <a href="{{ route('item.show',  [$cart->item->store, $cart->item]) }}">
                                             {{ $cart->item->name }}
@@ -34,17 +32,21 @@
                                     <td>
                                         <form action="{{ route('cart.store', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-light" name="cart">+</button>
+                                            <button type="submit" class="btn btn-light">+</button>
                                         </form>
                                         <form action="{{ route('cart.destroy', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
                                             @if ($cart->quantity == 1)
-                                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-light" name="cart">-</button>
+                                                <button type="submit" class="btn btn-light" name="delete">-</button>
                                             @else
-                                                <button type="submit" class="btn btn-light" name="cart">-</button>
+                                                <button type="submit" class="btn btn-light">-</button>
                                             @endif
                                         </form>
-                                        <a href="#" class="btn btn-light">Buy</a>
+                                        <form action="{{ route('purchase.store', $cart->item) }}" class="d-inline" method="post">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
+                                            <button type="submit" class="btn btn-light">Buy</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
