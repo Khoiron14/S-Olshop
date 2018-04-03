@@ -13,7 +13,6 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">id</th>
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
@@ -23,7 +22,6 @@
                         <tbody>
                             @foreach ($carts as $cart)
                                 <tr>
-                                    <th scope="row">{{ $cart->item->id }}</th>
                                     <td>
                                         <a href="{{ route('item.show',  [$cart->item->store, $cart->item]) }}">
                                             {{ $cart->item->name }}

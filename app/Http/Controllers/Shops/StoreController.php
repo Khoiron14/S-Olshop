@@ -17,6 +17,8 @@ class StoreController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('store.owner')->only('edit');
+        $this->middleware('store.register')->only('create', 'store');
     }
 
     /**
@@ -26,12 +28,6 @@ class StoreController extends Controller
      */
     public function create()
     {
-        if (!(auth()->user()->hasRole('user'))) {
-            return redirect()->back();
-        } elseif (auth()->user()->hasRole('seller')) {
-            return redirect()->route('store.show', auth()->user()->store);
-        }
-
         return view('store.register');
     }
 
@@ -42,10 +38,6 @@ class StoreController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if (!(auth()->user()->hasRole('user'))) {
-            return redirect()->back();
-        }
-
         $store = auth()->user()->store()->create($request->all());
 
         event(new Created($store));
@@ -70,6 +62,17 @@ class StoreController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  Store  $store
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Store $store)
+    {
+        return view('store.edit', compact('store'));
+    }
+
+    /**
      *
      * @param  \App\Http\Requests\StoreRequest  $request
      * @param  \App\Store  $store
@@ -81,7 +84,9 @@ class StoreController extends Controller
             return redirect()->back();
         }
 
-        $store->update($request->all());
+        $store->update([
+            'description' => $request->description,
+        ]);
         event(new Updated($store));
 
         alert()->success('Store has been updated!');

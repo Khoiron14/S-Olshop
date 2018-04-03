@@ -8,7 +8,6 @@ use App\Models\Process\Status;
 use App\Models\Shops\Items\Item;
 use App\Models\Process\Purchase;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
@@ -17,13 +16,13 @@ class PurchaseController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Request $request, Item $item)
+    public function store(Item $item)
     {
         if (!auth()->user()->can('purchase item')) {
             return redirect()->back();
         }
 
-        if ($item->stock < $request->quantity) {
+        if (!$item->isEnough(request()->quantity)) {
             alert()->warning('not enough stock');
 
             return redirect()->back();
@@ -31,8 +30,8 @@ class PurchaseController extends Controller
 
         $purchase = auth()->user()->purchases()->create([
             'item_id' => $item->id,
-            'quantity' => $request->quantity,
-            'price' => $item->price * $request->quantity,
+            'quantity' => request()->quantity,
+            'price' => $item->price * request()->quantity,
             'status_id' => Status::SYSTEM_PENDING,
         ]);
 
@@ -54,7 +53,7 @@ class PurchaseController extends Controller
             return redirect()->back();
         }
 
-        $purchase->update(['status_id' => $status]);
+        $purchase->update(['status_id' => Status::SELLER_CONFIRM]);
 
         return redirect()->back();
     }

@@ -24,16 +24,13 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'description' => 'required|string|max:500',
+            'description' => 'string|max:500',
+            'image' => 'image|mimes:jpeg,bmp,png'
         ];
 
-        if ($this->user()->hasRole('seller')) { // if seller want to update store
-            $rules['name'] = 'required|max:25|unique:stores,name,' . $this->store->id;
-            $rules['image'] = 'image|mimes:jpeg,bmp,png';
-        } else { // if user create store
+        if (!$this->user()->hasRole('seller')) { // if user create store
             $rules['name'] = 'required|max:25|unique:stores';
             $rules['domain'] = 'required|max:15|alpha_dash|regex:/^[a-z0-9]+$/|unique:stores';
-            $rules['image'] = 'required|image|mimes:jpeg,bmp,png';
         }
 
         return $rules;

@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Images;
 
+use App\Models\Image;
 use App\Events\Users\Created as CreateUser;
 use App\Events\Users\Updated as UpdateUser;
 use App\Events\Items\Created as CreateItem;
@@ -34,7 +35,7 @@ class Create
     public function onCreateUser(CreateUser $event)
     {
         $event->user->image()->create([
-            'path' => $this->images->store('avatars/users')
+            'path' => Image::USER_DEFAULT
         ]);
     }
 
@@ -94,7 +95,7 @@ class Create
     public function onCreateStore(CreateStore $event)
     {
         $event->store->image()->create([
-            'path' => $this->images->store('avatars/stores')
+            'path' => Image::STORE_DEFAULT
         ]);
     }
 

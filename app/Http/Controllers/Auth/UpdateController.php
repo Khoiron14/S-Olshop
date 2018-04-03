@@ -13,13 +13,22 @@ class UpdateController extends Controller
         $this->middleware('auth');
     }
 
+    public function show()
+    {
+        return view('auth.edit');
+    }
+
     public function update(UserRequest $request)
     {
+        if (auth()->user()->isNameDefault()) {
+            $name = $request->name;
+        } else {
+            $name = auth()->user()->name;
+        }
+
         auth()->user()->update([
-            'name' => $request->name,
+            'name' => $name,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
         ]);
 
         event(new Updated(auth()->user()));

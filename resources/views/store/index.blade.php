@@ -130,8 +130,9 @@
 
                 {{-- store description --}}
                 <div class="card-body">
-                    <label>Description :</label>
-                    <p>{{ $store->description }}</p>
+                    <p class="{{ $store->description ? '' : 'text-muted' }}">
+                        {{ $store->description ?: 'No description...' }}
+                    </p>
                 </div>
 
                 @if ($items->count() == null)

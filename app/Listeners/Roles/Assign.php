@@ -28,7 +28,7 @@ class Assign
      */
     public function onCreateStore(CreateStore $event)
     {
-        $event->user->assignRole('seller');
+        $event->store->user->assignRole('seller');
     }
 
     public function subscribe($events)

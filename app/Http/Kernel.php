@@ -61,5 +61,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'sweetalert' => \UxWeb\SweetAlert\ConvertMessagesIntoSweetAlert::class,
+        'store.owner' => \App\Http\Middleware\Store\Owner::class,
+        'store.register' => \App\Http\Middleware\Store\Register::class,
     ];
 }

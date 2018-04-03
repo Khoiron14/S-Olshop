@@ -43,15 +43,15 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                               <i class="ion-ios-contact ion-2x"></i> {{ Auth::user()->name }}
+                               <i class="ion-ios-contact ion-2x"></i> {{ auth()->user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <a href="{{ route('user.profile') }}" class="dropdown-item">Profile Page</a>
 
-                                @if (Auth::user()->hasRole('admin'))
+                                @if (auth()->user()->hasRole('admin'))
                                     <a href="{{ route('admin.index') }}" class="dropdown-item">Admin Page</a>
-                                @elseif (Auth::user()->hasRole('seller'))
-                                    <a href="{{ route('store.show', Auth::user()->store) }}" class="dropdown-item">Store Page</a>
+                                @elseif (auth()->user()->hasRole('seller'))
+                                    <a href="{{ route('store.show', auth()->user()->store) }}" class="dropdown-item">Store Page</a>
                                 @endif
                                 <a href="{{ route('user.purchase') }}" class="dropdown-item">Purchase</a>
 

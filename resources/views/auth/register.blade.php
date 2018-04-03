@@ -11,26 +11,6 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Name</label>
-
-                            <div class="col-lg-6">
-                                <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                        name="name"
-                                        value="{{ old('name') }}"
-                                        autofocus
-                                        required
-                                >
-                                @if ($errors->has('name'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-right">E-Mail</label>
 
                             <div class="col-lg-6">
@@ -46,62 +26,6 @@
                                     <div class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Phone Number</label>
-
-                            <div class="col-lg-6">
-                                <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                        name="phone"
-                                        value="{{ old('phone') }}"
-                                        required
-                                >
-
-                                @if ($errors->has('phone'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Address</label>
-
-                            <div class="col-lg-6">
-                                <input
-                                        type="text"
-                                        class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
-                                        name="address"
-                                        value="{{ old('address') }}"
-                                        required
-                                >
-
-                                @if ($errors->has('address'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('address') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Avatar</label>
-
-                            <div class="col-lg-6">
-                                <input type="file" class="form-control-file" name="image" required>
-
-                                @if ($errors->has('image'))
-                                    <ul>
-                                        @foreach ($errors->get('image') as $error)
-                                            <strong class="text-danger"><li>{{ $error }}</li></strong>
-                                        @endforeach
-                                    </ul>
                                 @endif
                             </div>
                         </div>

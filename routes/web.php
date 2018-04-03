@@ -23,8 +23,13 @@ Route::prefix('user')->group(function() {
     Route::get('/activate/resend', 'Auth\ActivationResendController@showResendForm')->name('user.activate.resend');
     Route::post('/activate/resend', 'Auth\ActivationResendController@resend');
 
-    Route::get('/profile', 'Auth\ProfileController@show')->name('user.profile');
+    Route::get('/profile', 'Users\ProfileController@show')->name('user.profile');
+    Route::get('/profile/edit', 'Auth\UpdateController@show')->name('user.edit');
     Route::patch('/profile/edit', 'Auth\UpdateController@update')->name('user.update');
+
+    Route::resource('address', 'Users\AddressController', ['except' => [
+        'show', 'create', 'edit'
+    ]]);
 
     Route::get('/purchase', 'Shops\PurchaseController@show')->name('user.purchase');
 
@@ -39,13 +44,20 @@ Route::resource('store', 'Shops\StoreController', ['except' => [
 
 Route::prefix('{store}')->group(function() {
     Route::get('/', 'Shops\StoreController@show')->name('store.show');
+    Route::get('/edit', 'Shops\StoreController@edit')->name('store.edit');
     Route::get('/purchase', 'Shops\StoreController@showPurchase')->name('store.purchase');
 
     Route::resource('item', 'Shops\ItemController', ['except' => [
         'index', 'show', 'create', 'edit'
     ]]);
 
-    Route::get('{item}', 'Shops\ItemController@show')->name('item.show');
+    Route::prefix('{item}')->group(function() {
+        Route::get('/', 'Shops\ItemController@show')->name('item.show');
+
+        Route::resource('comment', 'Users\CommentController', ['except' => [
+            'index', 'show', 'create', 'edit'
+        ]]);
+    });
 });
 
 Route::post('/purchase/{item}', 'Shops\PurchaseController@store')->name('purchase.store');

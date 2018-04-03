@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Image;
 use App\Models\Shops\Store;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,7 @@ class StoreSeeder extends Seeder
             'domain' => 'MJAstore',
             'description' => 'lorem ipsum....',
         ])->image()->create([
-            'path' => 'seeds/store.png'
+            'path' => Image::STORE_DEFAULT
         ]);
     }
 }

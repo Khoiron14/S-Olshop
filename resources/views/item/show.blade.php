@@ -4,11 +4,13 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-10 offset-1">
+
+            {{-- Item --}}
             <div class="card">
-                <div class="card-header bg-primary text-white mb-3">
+                <div class="card-header bg-primary text-white">
                     {{-- image & name --}}
                     <img class="rounded" src="{{ asset( $item->getImage()) }}" alt="avatar" height="64px" width="64px" style="object-fit: cover; background-color: #ddd">
-                    <h4 class="d-inline" style="margin-left: 8px">{{ $item->name }}</h4>
+                    <h4 class="d-inline ml-2">{{ $item->name }}</h4>
 
                     {{-- option button --}}
                     <div class="float-right">
@@ -28,7 +30,7 @@
 
                                         <div class="modal-body">
                                             <form role="form" method="POST" class="text-dark" action="{{ route('item.update', [$item->store, $item]) }}" enctype="multipart/form-data">
-                                                {!! csrf_field() !!}
+                                                {{ csrf_field() }}
                                                 {{ method_field('PATCH') }}
                                                 <div class="form-group">
                                                     <label>Item Name :</label>
@@ -112,7 +114,7 @@
                                                     @foreach ($item->images()->get() as $image)
                                                         <img class="rounded" src="{{ asset('images/' . $image->path) }}" alt="images[]" height="64" style="object-fit: cover; background-color: #ddd">
                                                     @endforeach
-                                                    <input type="file" class="form-control-file" name="images[]" multiple>
+                                                    <input type="file" class="ml-2" name="images[]" multiple>
                                                     @if ($errors->has('images.*'))
                                                         <ul>
                                                             @foreach ($errors->all() as $error)
@@ -153,10 +155,6 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="row">Id :</th>
-                                <td>{{ $item->id }}</td>
-                            </tr>
-                            <tr>
                                 <th scope="row">Category :</th>
                                 <td>
                                     @foreach ($item->categories as $category)
@@ -187,6 +185,35 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            {{-- Create Comment --}}
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">Write Comment</div>
+                <div class="card-body">
+                    <form class="form-horizontal" action="{{ route('comment.store', [$item->store, $item]) }}" method="post">
+                        {{ csrf_field() }}
+                        <textarea name="message" class="form-control" rows="5" cols="30" placeholder="Your comment ..." style="resize: none;"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+
+                {{-- Show Comments --}}
+                @foreach ($item->comments()->get() as $comment)
+                    <div class="card-body bg-light">
+                        <img class="rounded" src="{{ asset( $comment->user->getImage()) }}" alt="avatar" height="40px" width="40px" style="object-fit: cover; background-color: #ddd">
+                        <h5 class="d-inline ml-2"><b>{{ $comment->user->name }}</b></h5>
+                        @if ($item->isSellBy($comment->user))
+                            <span class="badge badge-primary">Seller</span>
+                        @elseif ($item->isPurchaseBy($comment->user))
+                            <span class="badge badge-success">Purchaser</span>
+                        @endif
+                        <p><small>{{ $comment->created_at->diffForHumans() }}</small></p>
+                        <p>{{ $comment->message }}</p>
+                        <hr>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
