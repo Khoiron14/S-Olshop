@@ -7,6 +7,7 @@ use App\Models\Users\User;
 use App\Models\Users\Cart;
 use App\Models\Shops\Store;
 use App\Models\Users\Comment;
+use App\Models\Process\Status;
 use App\Models\Process\Purchase;
 use App\Models\Shops\Items\Category;
 use Illuminate\Database\Eloquent\Model;
@@ -40,7 +41,7 @@ class Item extends Model
 
     public function isPurchaseBy($user) : bool
     {
-        return $user->purchases->find($this) != null;
+        return $user->purchases->find($this)->status->id == Status::SELLER_CONFIRM;
     }
 
     public function isEnough($quantity) : bool
