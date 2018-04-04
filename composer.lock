@@ -565,12 +565,10 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "algolia/algoliasearch-client-php": "^1.10",
                 "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "~6.0"
             },
             "suggest": {
-                "algolia/algoliasearch-client-php": "Required to use the Algolia engine (^1.10)."
             },
             "type": "library",
             "extra": {
@@ -600,7 +598,6 @@
             ],
             "description": "Laravel Scout provides a driver based solution to searching your Eloquent models.",
             "keywords": [
-                "algolia",
                 "laravel",
                 "search"
             ],
