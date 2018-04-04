@@ -51,38 +51,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Phone Number :</label>
-                            <input
-                                type="text"
-                                class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                name="phone"
-                                value="{{ auth()->user()->phone }}"
-                                placeholder="input your phone number."
-                                required="required">
-                            @if ($errors->has('phone'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('phone') }}</strong>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label>Address :</label>
-                            <input
-                                type="text"
-                                class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
-                                name="address"
-                                value="{{ auth()->user()->address }}"
-                                placeholder="input your address."
-                                required="required">
-                            @if ($errors->has('address'))
-                            <div class="invalid-feedback">
-                                <strong>{{ $errors->first('address') }}</strong>
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
                             <label>Avatar :</label><br>
                             <img
                                 class="rounded"
