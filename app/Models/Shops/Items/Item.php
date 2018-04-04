@@ -41,7 +41,13 @@ class Item extends Model
 
     public function isPurchaseBy($user) : bool
     {
-        return $user->purchases->find($this)->status->id == Status::SELLER_CONFIRM;
+        $itemPurchase = $user->purchases->find($this);
+
+        if ($itemPurchase) {
+            return $itemPurchase->status->id == Status::SELLER_CONFIRM;
+        }
+
+        return false;
     }
 
     public function isEnough($quantity) : bool
