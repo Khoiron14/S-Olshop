@@ -14,6 +14,7 @@ class PurchaseController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('user.hasAddress')->only('store');
     }
 
     public function store(Item $item)
