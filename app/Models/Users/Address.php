@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    protected $fillable = ['phone', 'location'];
+    protected $fillable = ['receiver', 'phone', 'location'];
 
     public function user()
     {
