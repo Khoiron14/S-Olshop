@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app') 
+
+@section('content')
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-10 offset-1">
@@ -6,6 +8,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <td scope="col">Receiver</td>
                         <td scope="col">Phone</td>
                         <td scope="col">Location</td>
                         <td scope="col">Option</td>
@@ -15,6 +18,7 @@
                 <tbody>
                     @foreach ($addresses as $address)
                     <tr>
+                        <td>{{ $address->receiver }}</td>
                         <td>{{ $address->phone }}</td>
                         <td>{{ $address->location }}</td>
                         <td>
@@ -45,6 +49,16 @@
                                             {{ csrf_field() }}
                                             {{ method_field('PATCH') }}
                                             <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="#receiver">Receiver</label>
+                                                    <input
+                                                        type="text"
+                                                        value="{{ $address->receiver }}"
+                                                        class="form-control"
+                                                        name="receiver"
+                                                        id="location">
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="#phone">Phone</label>
                                                     <input
@@ -122,6 +136,16 @@
                         <form action="{{ route('address.store') }}" method="post">
                             {{ csrf_field() }}
                             <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="#receiver">Receiver</label>
+                                    <input
+                                        type="text"
+                                        value="{{ auth()->user()->name }}"
+                                        class="form-control"
+                                        name="receiver"
+                                        id="location">
+                                </div>
+
                                 <div class="form-group">
                                     <label for="#phone">Phone</label>
                                     <input type="text" class="form-control" name="phone" id="phone">
