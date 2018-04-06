@@ -24,6 +24,7 @@ class AddressRequest extends FormRequest
     public function rules()
     {
         return [
+            'receiver' => 'required|string|max:30',
             'phone' => 'required|string|min:8|max:25',
             'location' => 'required|string|max:100',
         ];
