@@ -123,9 +123,8 @@
                 class="modal fade"
                 id="addAddress"
                 tabindex="-1"
-                role="dialog"
                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">Add Address</h5>
