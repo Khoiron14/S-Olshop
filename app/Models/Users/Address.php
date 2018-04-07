@@ -3,6 +3,7 @@
 namespace App\Models\Users;
 
 use App\Models\Users\User;
+use App\Models\Process\Purchase;
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
@@ -12,5 +13,10 @@ class Address extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 }
