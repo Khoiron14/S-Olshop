@@ -40,7 +40,7 @@
                 <div class="card-body text-center">
 
                     <div class="row">
-                        @foreach (auth()->user()->addresses()->get() as $address)
+                        @foreach (auth()->user()->addresses as $address)
                         <div class="card border-primary col-md-4 mb-3">
                             <div class="card-header bg-transparent">{{ $address->receiver }}</div>
                             <div class="card-body text-primary">
