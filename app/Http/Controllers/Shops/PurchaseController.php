@@ -29,8 +29,8 @@ class PurchaseController extends Controller
             return redirect()->back();
         }
 
-        $purchase = auth()->user()->purchases()->create([
-            'item_id' => $item->id,
+        $purchase = $item->purchases()->create([
+            'address_id' => request()->address,
             'quantity' => request()->quantity,
             'price' => $item->price * request()->quantity,
             'status_id' => Status::SYSTEM_PENDING,
