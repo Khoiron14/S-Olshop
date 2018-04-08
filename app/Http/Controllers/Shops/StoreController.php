@@ -84,9 +84,7 @@ class StoreController extends Controller
             return redirect()->back();
         }
 
-        $store->update([
-            'description' => $request->description,
-        ]);
+        $store->update($request->only('description'));
         event(new Updated($store));
 
         alert()->success('Store has been updated!');
