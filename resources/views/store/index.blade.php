@@ -12,7 +12,7 @@
                     <h4 class="d-inline" style="margin-left: 8px">{{ $store->name }}</h4>
 
                     {{-- option button --}}
-                    @if (Auth::user()->id == $store->user->id)
+                    @if (auth()->user() == $store->user)
                         <div class="float-right">
                             <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#addItem">Add Item</button>
                             <a href="{{ route('store.purchase', $store) }}" class="white btn btn-sm btn-warning">Purchase Request</a>
