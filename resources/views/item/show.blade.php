@@ -14,7 +14,7 @@
 
                     {{-- option button --}}
                     <div class="float-right">
-                        @if (Auth::user()->id == $item->store->user->id)
+                        @if (auth()->user() == $item->store->user)
                             {{-- edit item --}}
                             <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editForm">Edit</button>
 
