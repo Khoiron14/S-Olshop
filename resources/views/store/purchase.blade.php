@@ -13,8 +13,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">Item Name</th>
+                                <th scope="col">Receiver</th>
+                                <th scope="col">Item</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Status</th>
@@ -24,9 +24,36 @@
                         <tbody>
                             @foreach ($purchases as $purchase)
                                 <tr>
-                                    <th scope="row">{{ $purchase->id }}</th>
+                                    <td>
+                                        <button class="btn btn-light" data-toggle="modal" data-target="#receiver">{{ $purchase->address->receiver }}</button>
+
+                                        <div class="modal fade" id="receiver" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title">Receiver</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <b>Name :</b>
+                                                <p>{{ $purchase->address->receiver }}</p>
+                                                <b>Phone :</b>
+                                                <p>{{ $purchase->address->phone }}</p>
+                                                <b>Location :</b>
+                                                <p>{{ $purchase->address->location }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </td>
                                     <td>
                                         <a href="{{ route('item.show',  [$purchase->item->store, $purchase->item]) }}">
+                                            <img class="rounded mr-1" src="{{ asset( $purchase->item->getImage()) }}" alt="avatar" height="32px" width="32px" style="object-fit: cover; background-color: #ddd">
                                             {{ $purchase->item->name }}
                                         </a>
                                     </td>
