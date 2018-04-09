@@ -10,5 +10,6 @@ $factory->define(Item::class, function (Faker $faker) {
         'slug' => $faker->slug,
         'price' => $faker->randomNumber(6),
         'stock' => $faker->numberBetween(10, 20),
+        'description' => $faker->text,
     ];
 });
