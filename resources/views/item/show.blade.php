@@ -124,6 +124,20 @@
                                                     @endif
                                                 </div>
 
+                                                <div class="form-group">
+                                                    <label>Description :</label>
+                                                    <textarea
+                                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                                        name="description"
+                                                        rows="3"
+                                                        placeholder="add description.">{{ $item->description }}</textarea>
+                                                    @if ($errors->has('description'))
+                                                    <div class="invalid-feedback">
+                                                        <strong>{{ $errors->first('description') }}</strong>
+                                                    </div>
+                                                    @endif
+                                                </div>
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Edit</button>
@@ -184,6 +198,11 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <b>Description :</b>
+                    <p class="{{ $item->description ? '' : 'text-muted' }}">
+                        {{ $item->description ?: 'No description...' }}
+                    </p>
                 </div>
             </div>
 
