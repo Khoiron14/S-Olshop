@@ -24,9 +24,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'description' => 'string|max:500',
             'image' => 'image|mimes:jpeg,bmp,png'
         ];
+
+        if ($this->description != null) {
+            $rules['description'] = 'string|max:500';
+        }
 
         if (!$this->user()->hasRole('seller')) { // if user create store
             $rules['name'] = 'required|max:25|unique:stores';

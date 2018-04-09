@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('slug');
             $table->double('price');
             $table->unsignedInteger('stock');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

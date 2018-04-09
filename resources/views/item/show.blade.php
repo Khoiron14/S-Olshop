@@ -14,7 +14,7 @@
 
                     {{-- option button --}}
                     <div class="float-right">
-                        @if (Auth::user()->id == $item->store->user->id)
+                        @if (auth()->user() == $item->store->user)
                             {{-- edit item --}}
                             <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#editForm">Edit</button>
 
@@ -124,6 +124,20 @@
                                                     @endif
                                                 </div>
 
+                                                <div class="form-group">
+                                                    <label>Description :</label>
+                                                    <textarea
+                                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                                        name="description"
+                                                        rows="3"
+                                                        placeholder="add description.">{{ $item->description }}</textarea>
+                                                    @if ($errors->has('description'))
+                                                    <div class="invalid-feedback">
+                                                        <strong>{{ $errors->first('description') }}</strong>
+                                                    </div>
+                                                    @endif
+                                                </div>
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Edit</button>
@@ -172,7 +186,12 @@
                             </tr>
                             <tr>
                                 <th scope="row">Sold by :</th>
-                                <td><a href="{{ route('store.show', $item->store) }}">{{ $item->store->name }}</td>
+                                <td>
+                                    <a href="{{ route('store.show', $item->store) }}">
+                                        <img class="rounded mr-1" src="{{ asset( $item->store->getImage()) }}" alt="avatar" height="32px" width="32px" style="object-fit: cover; background-color: #ddd">
+                                        {{ $item->store->name }}
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row">Images :</th>
@@ -184,6 +203,11 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <b>Description :</b>
+                    <p class="{{ $item->description ? '' : 'text-muted' }}">
+                        {{ $item->description ?: 'No description...' }}
+                    </p>
                 </div>
             </div>
 

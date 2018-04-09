@@ -13,7 +13,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Item Name</th>
+                                <th scope="col">Item</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Option</th>
@@ -34,6 +34,7 @@
                                             {{ csrf_field() }}
                                             <button type="submit" class="btn btn-light">+</button>
                                         </form>
+
                                         <form action="{{ route('cart.destroy', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
                                             @if ($cart->quantity == 1)
@@ -42,11 +43,67 @@
                                                 <button type="submit" class="btn btn-light">-</button>
                                             @endif
                                         </form>
+
+                                        @if (auth()->user()->hasAddress())
+                                        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#selectAddress">
+                                            Purchase
+                                        </button>
+
+                                        <div
+                                            class="modal fade"
+                                            id="selectAddress"
+                                            tabindex="-1"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-primary text-white">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Select Address</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <form
+                                                        action="{{ route('purchase.store', $cart->item) }}"
+                                                        class="d-inline"
+                                                        method="post">
+                                                        {{ csrf_field() }}
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
+                                                            @foreach (auth()->user()->addresses as $address)
+                                                            <div class="form-check">
+                                                                <input
+                                                                    class="form-check-input"
+                                                                    type="radio"
+                                                                    name="address"
+                                                                    value="{{ $address->id }}"
+                                                                    required="required">
+                                                                    <div class="card border-primary form-check-label col-md-4 mb-3">
+                                                                        <div class="card-header bg-transparent">{{ $address->receiver }}</div>
+                                                                        <div class="card-body text-primary">
+                                                                            <p class="card-text">{{ $address->phone }}</p>
+                                                                            <p class="card-text">{{ $address->location }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Purchase</button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @else
                                         <form action="{{ route('purchase.store', $cart->item) }}" class="d-inline" method="post">
                                             {{ csrf_field() }}
-                                            <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
-                                            <button type="submit" class="btn btn-light">Buy</button>
+                                            <button type="submit" class="btn btn-light">Purchase</button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

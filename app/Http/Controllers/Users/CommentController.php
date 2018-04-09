@@ -44,9 +44,7 @@ class CommentController extends Controller
      */
     public function update(CommentRequest $request, Store $store, Item $item, Comment $comment)
     {
-        $comment->update([
-            'message' => $request->message
-        ]);
+        $comment->update($request->only('message'));
 
         return redirect()->back();
     }

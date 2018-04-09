@@ -53,6 +53,11 @@ class User extends Authenticatable
         return str_before($this->email, '@') == $this->name;
     }
 
+    public function hasAddress() : bool
+    {
+        return $this->addresses()->first() != null;
+    }
+
     public function scopeByActivationColumns(Builder $builder, $email, $token)
     {
         return $builder->whereEmail($email)->whereActivation_token($token);
@@ -70,7 +75,7 @@ class User extends Authenticatable
 
     public function purchases()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->hasManyThrough(Purchase::class, Address::class);
     }
 
     public function carts()

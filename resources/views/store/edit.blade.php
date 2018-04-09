@@ -65,8 +65,7 @@
                                 class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
                                 name="description"
                                 rows="3"
-                                placeholder="input description."
-                                required="required">{{ $store->description }}</textarea>
+                                placeholder="add description.">{{ $store->description }}</textarea>
                             @if ($errors->has('description'))
                             <div class="invalid-feedback">
                                 <strong>{{ $errors->first('description') }}</strong>

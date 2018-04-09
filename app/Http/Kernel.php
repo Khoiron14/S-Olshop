@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'sweetalert' => \UxWeb\SweetAlert\ConvertMessagesIntoSweetAlert::class,
         'store.owner' => \App\Http\Middleware\Store\Owner::class,
         'store.register' => \App\Http\Middleware\Store\Register::class,
+        'user.hasAddress' => \App\Http\Middleware\User\HasAddress::class,
     ];
 }
