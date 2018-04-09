@@ -16,6 +16,7 @@
                         <div class="float-right">
                             <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#addItem">Add Item</button>
                             <a href="{{ route('store.purchase', $store) }}" class="white btn btn-sm btn-warning">Purchase Request</a>
+                            <a href="{{ route('store.edit', $store) }}" class="btn btn-sm btn-light">Edit</a>
 
                             {{-- modal form for add item --}}
                             <div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-hidden="true">
@@ -30,7 +31,7 @@
 
                                         <div class="modal-body">
                                             <form role="form" method="POST" class="text-dark" action="{{ route('item.store', $store) }}" enctype="multipart/form-data">
-                                                {!! csrf_field() !!}
+                                                {{ csrf_field() }}
                                                 <div class="form-group">
                                                     <label>Item Name :</label>
                                                     <input
@@ -112,6 +113,20 @@
                                                                 <strong class="text-danger"><li>{{ $error }}</li></strong>
                                                             @endforeach
                                                         </ul>
+                                                    @endif
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Description :</label>
+                                                    <textarea
+                                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                                        name="description"
+                                                        rows="3"
+                                                        placeholder="add description."></textarea>
+                                                    @if ($errors->has('description'))
+                                                    <div class="invalid-feedback">
+                                                        <strong>{{ $errors->first('description') }}</strong>
+                                                    </div>
                                                     @endif
                                                 </div>
 
