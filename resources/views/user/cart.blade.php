@@ -13,7 +13,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Item Name</th>
+                                <th scope="col">Item</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Option</th>
@@ -76,7 +76,8 @@
                                                                     class="form-check-input"
                                                                     type="radio"
                                                                     name="address"
-                                                                    value="{{ $address->id }}">
+                                                                    value="{{ $address->id }}"
+                                                                    required="required">
                                                                     <div class="card border-primary form-check-label col-md-4 mb-3">
                                                                         <div class="card-header bg-transparent">{{ $address->receiver }}</div>
                                                                         <div class="card-body text-primary">
