@@ -17,7 +17,7 @@ class Item extends Model
 {
     use Searchable;
 
-    protected $fillable = ['name', 'slug', 'price', 'stock'];
+    protected $fillable = ['name', 'slug', 'price', 'stock', 'description'];
 
     public function getRouteKeyName()
     {
