@@ -186,7 +186,12 @@
                             </tr>
                             <tr>
                                 <th scope="row">Sold by :</th>
-                                <td><a href="{{ route('store.show', $item->store) }}">{{ $item->store->name }}</td>
+                                <td>
+                                    <a href="{{ route('store.show', $item->store) }}">
+                                        <img class="rounded mr-1" src="{{ asset( $item->store->getImage()) }}" alt="avatar" height="32px" width="32px" style="object-fit: cover; background-color: #ddd">
+                                        {{ $item->store->name }}
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row">Images :</th>
