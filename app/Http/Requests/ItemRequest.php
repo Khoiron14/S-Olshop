@@ -29,6 +29,10 @@ class ItemRequest extends FormRequest
             'stock' => 'required|integer',
         ];
 
+        if ($this->description != null) {
+            $rules['description'] = 'string|max:500';
+        }
+
         // if adding item, image is required
         if (!$this->item) {
             $rules['images.*'] = 'required';
