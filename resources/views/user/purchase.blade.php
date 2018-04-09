@@ -14,7 +14,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Receiver</th>
-                                <th scope="col">Item Name</th>
+                                <th scope="col">Item</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Status</th>
@@ -53,6 +53,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('item.show',  [$purchase->item->store, $purchase->item]) }}">
+                                            <img class="rounded mr-1" src="{{ asset( $purchase->item->getImage()) }}" alt="avatar" height="32px" width="32px" style="object-fit: cover; background-color: #ddd">
                                             {{ $purchase->item->name }}
                                         </a>
                                     </td>
