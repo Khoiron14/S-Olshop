@@ -35,6 +35,7 @@ class ItemController extends Controller
             'slug' => str_slug($request->name),
             'price' => $request->price,
             'stock' => $request->stock,
+            'description' => $request->description,
         ]);
 
         event(new Created($item));
@@ -76,6 +77,7 @@ class ItemController extends Controller
             'slug' => str_slug($request->name),
             'price' => $request->price,
             'stock' => $request->stock,
+            'description' => $request->description
         ]);
 
         event(new Updated($item));
